@@ -13,7 +13,6 @@
   },
   "files": [
     "dist/",
-    "index.js",
     "API.md",
     "CHANGELOG.md"
   ],
