@@ -31,7 +31,7 @@
     "dist": "npm run eslint && npm run clean && npm run bundle && npm run docs",
     "docs": "documentation build src/client.js src/node.js --github --format md --output API.md",
     "pretest": "npm run bundle",
-    "prepublish": "npm start",
+    "preversion": "npm run bundle",
     "version": "auto-changelog --package; git add API.md CHANGELOG.md",
     "release:patch": "np patch",
     "release:pre": "np prerelease"
