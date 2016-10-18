@@ -28,6 +28,7 @@ export default class ClientLogger extends Logger {
         name: 'rollbar',
         level: 'warn',
         stream: new ClientRollbarLogger({
+          token: this.rollbarToken,
           environment: this.environment,
           codeVersion: this.codeVersion
         }),
