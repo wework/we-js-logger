@@ -12,8 +12,23 @@ import omit from 'lodash/omit';
 import { bunyanLevelToRollbarLevelName } from '../common/rollbar';
 
 export default function RollbarLogger({ token, environment, codeVersion }) {
-  // TODO test for rollbar in head via `global.Rollbar`,
-  // if present update config, else init
+  if (global.Rollbar && global.Rollbar.options.accessToken && global.Rollbar.accessToken !== 'undefined') {
+    // Rollbar is loaded globally (ie, the quick-start snippet has been pasted into the document's head)
+  } else {
+    // Init Rollbar here
+    Rollbar.init({
+      accessToken: token,
+      captureUncaught: true,
+      captureUnhandledRejections: true,
+      payload: {
+        environment,
+        javascipt: {
+          code_version: codeVersion,
+          source_map_enabled: true
+        }
+      }
+    });
+  }
 }
 
 RollbarLogger.prototype.write = function (data = {}) {

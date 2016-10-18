@@ -1,6 +1,6 @@
 {
   "name": "we-js-logger",
-  "version": "0.0.1",
+  "version": "0.0.2-1",
   "description": "A logger for Node and Browser JS with Rollbar and Logentries transports",
   "author": "WeWork Digital <dev-team@wework.com>",
   "contributors": [
@@ -13,7 +13,6 @@
   },
   "files": [
     "dist/",
-    "index.js",
     "API.md",
     "CHANGELOG.md"
   ],
@@ -32,7 +31,7 @@
     "dist": "npm run eslint && npm run clean && npm run bundle && npm run docs",
     "docs": "documentation build src/client.js src/node.js --github --format md --output API.md",
     "pretest": "npm run bundle",
-    "prepublish": "npm start",
+    "preversion": "npm run bundle",
     "version": "auto-changelog --package; git add API.md CHANGELOG.md",
     "release:patch": "np patch",
     "release:pre": "np prerelease"

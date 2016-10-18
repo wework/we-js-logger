@@ -2,7 +2,7 @@
  * @module we-js-logger/util/logger
  * @description Base logger class, used for both node and client loggers
  *
- * Uses (bunyan)[https://github.com/trentm/node-bunyan/] under the hood, which has a few quirks
+ * Uses [bunyan](https://github.com/trentm/node-bunyan/) under the hood, which has a few quirks
  */
 import bunyan from 'bunyan';
 
@@ -18,7 +18,7 @@ export default class Logger {
    * @param  {Object}  options.serializers - bunyan serializer configuration
    * @param  {String}  options.logentriesToken - Logentries API token
    * @param  {String}  options.rollbarToken - Rollbar token
-   * @returns {Object}  a configured bunyan instance
+   * @returns {Object} a configured bunyan instance
    */
   constructor({
     name = 'WeWork',

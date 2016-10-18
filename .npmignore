@@ -1,8 +1,7 @@
 # Don't publish anything to npm but package.json, the dist
-# directory, API.md, CHANGELOG.md, and the root index.js file
+# directory, API.md, CHANGELOG.md
 
 !dist/*
 !API.md
 !CHANGELOG.md
 !package.json
-!index.js

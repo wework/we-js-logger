@@ -2,46 +2,40 @@
 
 # we-js-logger/client
 
-[src/client.js:5-5](https://github.com/wework/we-js-logger/blob/3a23034cfa419603ca14ab2e472d2a348d3bee06/src/client.js#L5-L5 "Source code on GitHub")
+[src/client.js:5-5](https://github.com/wework/we-js-logger/blob/27676a6f42a997acea25c318bf6dd775bab6b68e/src/client.js#L5-L5 "Source code on GitHub")
 
 A logger than can be used in browsers
 
 # we-js-logger/util/client/consoleLogger
 
-[src/util/client/consoleLogger.js:6-6](https://github.com/wework/we-js-logger/blob/3a23034cfa419603ca14ab2e472d2a348d3bee06/src/util/client/consoleLogger.js#L6-L6 "Source code on GitHub")
+[src/util/client/consoleLogger.js:6-6](https://github.com/wework/we-js-logger/blob/27676a6f42a997acea25c318bf6dd775bab6b68e/src/util/client/consoleLogger.js#L6-L6 "Source code on GitHub")
 
 Custom bunyan stream that writes to browser console with nice formatting
 
 # we-js-logger/util/client/logentriesLogger
 
-[src/util/client/logentriesLogger.js:6-6](https://github.com/wework/we-js-logger/blob/3a23034cfa419603ca14ab2e472d2a348d3bee06/src/util/client/logentriesLogger.js#L6-L6 "Source code on GitHub")
+[src/util/client/logentriesLogger.js:6-6](https://github.com/wework/we-js-logger/blob/27676a6f42a997acea25c318bf6dd775bab6b68e/src/util/client/logentriesLogger.js#L6-L6 "Source code on GitHub")
 
 Custom bunyan stream that transports to logentries from a browser
 
 # we-js-logger/util/client/rollbarLogger
 
-[src/util/client/rollbarLogger.js:9-9](https://github.com/wework/we-js-logger/blob/3a23034cfa419603ca14ab2e472d2a348d3bee06/src/util/client/rollbarLogger.js#L9-L9 "Source code on GitHub")
+[src/util/client/rollbarLogger.js:9-9](https://github.com/wework/we-js-logger/blob/27676a6f42a997acea25c318bf6dd775bab6b68e/src/util/client/rollbarLogger.js#L9-L9 "Source code on GitHub")
 
 Custom rollbar stream that transports to logentries from a browser
              Note: Rollbar init is _not_ currently handled here, see
              <https://rollbar.com/docs/notifier/rollbar.js/#quick-start>
              for details on setting up Rollbar for a client app
 
-# we-js-logger/util/common/rollbar
-
-[src/util/common/rollbar.js:9-16](https://github.com/wework/we-js-logger/blob/3a23034cfa419603ca14ab2e472d2a348d3bee06/src/util/common/rollbar.js#L9-L16 "Source code on GitHub")
-
-Shared rollbar helpers
-
 # we-js-logger/node
 
-[src/node.js:5-5](https://github.com/wework/we-js-logger/blob/3a23034cfa419603ca14ab2e472d2a348d3bee06/src/node.js#L5-L5 "Source code on GitHub")
+[src/node.js:5-5](https://github.com/wework/we-js-logger/blob/27676a6f42a997acea25c318bf6dd775bab6b68e/src/node.js#L5-L5 "Source code on GitHub")
 
 A logger than can be used in node processes
 
 # we-js-logger/util/logger
 
-[src/util/common/logger.js:7-7](https://github.com/wework/we-js-logger/blob/3a23034cfa419603ca14ab2e472d2a348d3bee06/src/util/common/logger.js#L7-L7 "Source code on GitHub")
+[src/util/common/logger.js:7-7](https://github.com/wework/we-js-logger/blob/27676a6f42a997acea25c318bf6dd775bab6b68e/src/util/common/logger.js#L7-L7 "Source code on GitHub")
 
 Base logger class, used for both node and client loggers
 
@@ -49,7 +43,7 @@ Uses (bunyan)[https://github.com/trentm/node-bunyan/] under the hood, which has 
 
 # constructor
 
-[src/util/common/logger.js:23-57](https://github.com/wework/we-js-logger/blob/3a23034cfa419603ca14ab2e472d2a348d3bee06/src/util/common/logger.js#L23-L57 "Source code on GitHub")
+[src/util/common/logger.js:23-57](https://github.com/wework/we-js-logger/blob/27676a6f42a997acea25c318bf6dd775bab6b68e/src/util/common/logger.js#L23-L57 "Source code on GitHub")
 
 **Parameters**
 
@@ -78,13 +72,19 @@ Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 
 # we-js-logger/util/server/rollbarLogger
 
-[src/util/server/rollbarLogger.js:7-7](https://github.com/wework/we-js-logger/blob/3a23034cfa419603ca14ab2e472d2a348d3bee06/src/util/server/rollbarLogger.js#L7-L7 "Source code on GitHub")
+[src/util/server/rollbarLogger.js:7-7](https://github.com/wework/we-js-logger/blob/27676a6f42a997acea25c318bf6dd775bab6b68e/src/util/server/rollbarLogger.js#L7-L7 "Source code on GitHub")
 
 Custom bunyan stream that transports to Rollbar from a node process.
              Note: Rollbar initialization is handled here.
 
+# we-js-logger/util/common/rollbar
+
+[src/util/common/rollbar.js:9-16](https://github.com/wework/we-js-logger/blob/27676a6f42a997acea25c318bf6dd775bab6b68e/src/util/common/rollbar.js#L9-L16 "Source code on GitHub")
+
+Shared rollbar helpers
+
 # we-js-logger/util/server/logentriesLogger
 
-[src/util/server/logentriesLogger.js:6-6](https://github.com/wework/we-js-logger/blob/3a23034cfa419603ca14ab2e472d2a348d3bee06/src/util/server/logentriesLogger.js#L6-L6 "Source code on GitHub")
+[src/util/server/logentriesLogger.js:6-6](https://github.com/wework/we-js-logger/blob/27676a6f42a997acea25c318bf6dd775bab6b68e/src/util/server/logentriesLogger.js#L6-L6 "Source code on GitHub")
 
 Custom bunyan stream that transports to logentries from a node process
