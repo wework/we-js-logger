@@ -15,21 +15,67 @@ we-js-logger
 
 # Introduction
 
+This is an opinionated logger for JS applications:
+
+- Uses [bunyan](https://github.com/trentm/node-bunyan), a JSON logger, under the hood
+- Transports logs to Logentries and/or Rollbar
+- Universal. Can be used in the browser and Node.js processes
 
 # Usage
 
 ```js
-
+import Logger from 'we-js-logger';
+const log = new Logger({
+    name: 'my-logger',
+    environment: 'production',
+    level: 'debug',
+    codeVersion: process.env.SHA_VERSION,
+    logentriesToken: process.env.LOGENTRIES_TOKEN,
+    rollbarToken: process.env.ROLLBAR_TOKEN
+});
 ```
+
+## Node.js usage
+
+This package can be used via `npm` and `node` with no special considerations.
+
+## Browser usage
+
+This package exposes a `client` build for browser usage. It is referenced in the `browser` field of `package.json`, so module loaders that follow this spec will load it easily.
+
+For example, we use `webpack` to load this module and do not need any extra configuration to do so.
 
 ## Configuration
 
+See https://github.com/wework/we-js-logger/blob/master/API.md#we-js-loggerutillogger for API documentation
 
 ## Examples
 
 ```js
+log.fatal({ err }, 'Application crashing because something terrible happened.');
+
+log.error({ err, req }, 'API request failed');
+
+log.info({ action }, 'Something relevant happened')
+
+log.debug({ event, action }, 'Something useful for developers happened');
 
 ```
+
+See https://github.com/trentm/node-bunyan#log-method-api for more detail.
+
+# Logentries Integration
+
+*More docs coming soon.*
+
+Providing the `Logger` constructor a `logentriesToken` option enables this transport.
+
+# Rollbar Integration
+
+For node usage, this library will initialize Rollbar.
+For browser usage, this library will only initialize Rollbar if it hasn't been loaded already.
+
+See https://rollbar.com/docs/notifier/rollbar.js/#quick-start for documentation on setting up Rollbar for browser applications
 
 
 # Development
@@ -73,8 +119,20 @@ Regenerate `API.md` docs from JSDoc comments
 $ npm run docs
 ```
 
+### Bundle
+Packages client and node bundles for distribution, output to `/dist`
+```shell
+$ npm run bundle
+```
+
+### Distribute
+Lints, cleans, bundles, and generates docs for distribution, output to `/dist`
+```shell
+$ npm run dist
+```
+
 ### Release
-We're using `np` to simplify publishing to npm. We have two targets preconfigured, for others go ahead an use `np` directly.
+We're using `np` to simplify publishing to npm. We have two targets pre-configured, for others go ahead and use `np` directly.
 
 ```shell
 $ npm run release:pre   # prerelease
