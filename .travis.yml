@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+   - "6.*"
+
+branches:
+  only:
+    - master
+
+script:
+    - "npm run test:ci"
+
+after_success:
+    - SAUCELABS=true npm run test:browser
+
+cache:
+  directories:
+    - node_modules
+
+notifications:
+    email: false
+
+sudo: false

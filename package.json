@@ -1,0 +1,107 @@
+{
+  "name": "we-js-logger",
+  "version": "0.0.0",
+  "description": "A logger for Node and Browser JS with Rollbar and Logentries transports",
+  "author": "WeWork Digital <dev-team@wework.com>",
+  "contributors": [
+    "Mike Nason <michael.nason@wework.com> (https://github.com/nason)"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/wework/we-js-logger",
+  "bugs": {
+    "url": "https://github.com/wework/we-js-logger/issues"
+  },
+  "files": [
+    "dist/",
+    "index.js",
+    "API.md",
+    "CHANGELOG.md"
+  ],
+  "main": "dist/node.js",
+  "browser": "dist/client.js",
+  "scripts": {
+    "test": "npm run test:browser && npm run test:node",
+    "test:ci": "npm run test:browser && npm run test:node:ci",
+    "test:browser": "NODE_ENV=test karma start test/karma.conf.js",
+    "test:node": "NODE_ENV=test nyc mocha -r test/runner test/specs/**/*.js",
+    "test:node:ci": "npm run test:node && nyc report --reporter=text-lcov | coveralls",
+    "eslint": "eslint src test",
+    "clean": "rimraf dist && mkdirp dist",
+    "bundle": "rollup -c rollup.client.config.js && rollup -c rollup.node.config.js",
+    "start": "npm test && npm run dist",
+    "dist": "npm run eslint && npm run clean && npm run bundle && npm run docs",
+    "docs": "documentation build src/client.js src/node.js --github --format md --output API.md",
+    "pretest": "npm run bundle",
+    "prepublish": "npm start",
+    "version": "auto-changelog --package; git add API.md CHANGELOG.md",
+    "release:patch": "np patch",
+    "release:pre": "np prerelease"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wework/we-js-logger.git"
+  },
+  "engines": {
+    "node": ">=6.0"
+  },
+  "keywords": [
+    "javascript",
+    "es6",
+    "es2015",
+    "universal",
+    "isomorphic",
+    "logging",
+    "rollbar",
+    "logentries",
+    "bunyan"
+  ],
+  "peerDependencies": {},
+  "devDependencies": {
+    "auto-changelog": "0.3.1",
+    "babel-core": "6.17.0",
+    "babel-loader": "6.2.5",
+    "babel-plugin-external-helpers": "6.8.0",
+    "babel-plugin-istanbul": "2.0.3",
+    "babel-plugin-transform-es2015-modules-umd": "6.12.0",
+    "babel-polyfill": "6.16.0",
+    "babel-preset-es2015": "6.16.0",
+    "babel-preset-stage-0": "6.16.0",
+    "chai": "3.5.0",
+    "coveralls": "2.11.14",
+    "documentation": "4.0.0-beta11",
+    "eslint": "3.8.1",
+    "imports-loader": "0.6.5",
+    "install": "0.8.1",
+    "json-loader": "0.5.4",
+    "karma": "1.3.0",
+    "karma-coverage": "1.1.1",
+    "karma-mocha": "1.2.0",
+    "karma-mocha-reporter": "2.2.0",
+    "karma-phantomjs-launcher": "1.0.2",
+    "karma-sauce-launcher": "1.0.0",
+    "karma-sourcemap-loader": "0.3.7",
+    "karma-webpack": "1.8.0",
+    "mkdirp": "0.5.1",
+    "mocha": "3.1.2",
+    "np": "2.9.0",
+    "npm": "3.10.8",
+    "nyc": "8.3.1",
+    "phantomjs-prebuilt": "2.1.13",
+    "rimraf": "2.5.4",
+    "rollup": "0.36.3",
+    "rollup-plugin-babel": "2.6.1",
+    "rollup-plugin-filesize": "1.0.0",
+    "semver": "5.3.0",
+    "sinon": "1.17.6",
+    "sinon-chai": "2.8.0",
+    "webpack": "1.13.2"
+  },
+  "dependencies": {
+    "bunyan": "1.8.2",
+    "bunyan-format": "0.2.1",
+    "le_js": "git://github.com/logentries/le_js.git#56addf6c71c7f9454eb49b1a12d97037c3715bb9",
+    "le_node": "1.6.7",
+    "lodash": "4.16.4",
+    "rollbar": "0.6.2"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "reporter": [
+    "html",
+    "lcov",
+    "cobertura",
+    "text-summary"
+  ],
+  "report-dir": "./coverage/node",
+  "include": [
+    "src/**/*.js"
+  ],
+  "require": [
+    "babel-register"
+  ],
+  "sourceMap": false,
+  "instrument": false,
+  "show-process-tree": true
+}

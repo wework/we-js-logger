@@ -1,0 +1,13 @@
+{
+  "presets": [
+    "es2015",
+    "stage-0"
+  ],
+  plugins: [
+  ],
+  "env": {
+    "test": {
+      "plugins": [ [ "istanbul", { "exclude": "test/**/*" } ] ]
+    }
+  }
+}
