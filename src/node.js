@@ -1,7 +1,3 @@
-/**
- * @module we-js-logger/node
- * @description A logger than can be used in node processes
- */
 import Logger from './util/common/logger';
 
 import bunyanFormat from 'bunyan-format';
@@ -9,6 +5,10 @@ import ServerRollbarLogger from './util/server/rollbarLogger';
 import ServerLogentriesLogger from './util/server/logentriesLogger';
 import RollbarLogger from './util/server/rollbarLogger';
 
+/**
+ * @module we-js-logger/node
+ * @description A logger than can be used in node processes
+ */
 export default class NodeLogger extends Logger {
   getStreams() {
     // Any passed in streams

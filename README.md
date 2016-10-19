@@ -1,8 +1,6 @@
 we-js-logger
 ====================
 
-## TODO: write out these docs!
-
 [![Build Status][travis-image]][travis-url]
 [![Coverage Status][coveralls-image]][coveralls-url]
 [![NPM version][npm-version-image]][npm-url]
@@ -43,7 +41,11 @@ This package can be used via `npm` and `node` with no special considerations.
 
 This package exposes a `client` build for browser usage. It is referenced in the `browser` field of `package.json`, so module loaders that follow this spec will load it easily.
 
-For example, we use `webpack` to load this module and do not need any extra configuration to do so.
+For example, we commonly use `webpack` to load this module.
+
+### Webpack Considerations
+
+*TODO document webpack setup*
 
 ## Configuration
 
@@ -77,6 +79,7 @@ For browser usage, this library will only initialize Rollbar if it hasn't been l
 
 See https://rollbar.com/docs/notifier/rollbar.js/#quick-start for documentation on setting up Rollbar for browser applications
 
+See https://rollbar.com/docs/notifier/node_rollbar/ for documentation on setting up Rollbar for node processes.
 
 # Development
 

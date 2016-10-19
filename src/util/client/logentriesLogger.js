@@ -1,12 +1,12 @@
-/**
- * @module we-js-logger/util/client/logentriesLogger
- * @description Custom bunyan stream that transports to logentries from a browser
- */
-
 import isFunction from 'lodash/isFunction';
 import bunyan from 'bunyan';
 import LE from 'le_js';
 
+/**
+* Custom bunyan stream that transports to Logentries from client applications
+* @param {String} options.token
+* @param {String} options.level
+*/
 export default function ClientLogentriesLogger({ token }) {
   LE.init({
     token,
@@ -15,6 +15,11 @@ export default function ClientLogentriesLogger({ token }) {
   });
 }
 
+/**
+* Transport logs to Logentries
+* @param  {Object} data
+* @returns {undefined}
+*/
 ClientLogentriesLogger.prototype.write = function (data = {}) {
   const level = bunyan.nameFromLevel[data.level];
   if (isFunction(LE[level])) {

@@ -1,11 +1,15 @@
-/**
- * @module we-js-logger/util/client/consoleLogger
- * @description Custom bunyan stream that writes to browser console with nice formatting
- */
-
 import bunyan from 'bunyan';
 
+/**
+ * Pretty logging to `console` for client applications
+ */
 export default function ClientConsoleLogger() {}
+
+/**
+ * Transport to `console`
+ * @param  {Object} data
+ * @returns {undefined}
+ */
 ClientConsoleLogger.prototype.write = function (data = {}) {
   const loggerName = data.component ? `${data.name}/${data.component}` : data.name;
 

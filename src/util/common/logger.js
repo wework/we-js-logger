@@ -1,11 +1,11 @@
+import bunyan from 'bunyan';
+
 /**
  * @module we-js-logger/util/logger
  * @description Base logger class, used for both node and client loggers
  *
  * Uses [bunyan](https://github.com/trentm/node-bunyan/) under the hood, which has a few quirks
  */
-import bunyan from 'bunyan';
-
 export default class Logger {
   /**
    * @param  {Object}  options - logger configuration
@@ -56,14 +56,12 @@ export default class Logger {
     return logger;
   }
 
+  /**
+   * getStreams
+   * @description returns bunyan streams -- meant to be overridden by subclasses of Logger
+   * @returns {Array}
+   */
   getStreams() {
-    const streams = [
-      // Any passed in streams
-      ...this.streams
-    ];
-
-    console.warn('Base logger class should not be used directly. No transports are added by default.');
-
-    return streams;
+    return this.streams;
   }
 }
