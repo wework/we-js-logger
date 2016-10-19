@@ -1,15 +1,17 @@
-import Rollbar from 'rollbar';
 import bunyan from 'bunyan';
 import omit from 'lodash/omit';
 import get from 'lodash/get';
 import { bunyanLevelToRollbarLevelName } from '../common/rollbar';
 
+const Rollbar = global.Rollbar;
+
 // An unconfigured Rollbar has an accessToken of "undefined" by default
-const isGlobalRollbarConfigured = () => get(global.Rollbar, 'options.accessToken', 'undefined') !== 'undefined';
+export const isGlobalRollbarConfigured = () => get(Rollbar, 'options.accessToken', 'undefined') !== 'undefined';
 
 /**
  * Custom rollbar stream that transports to logentries from a browser
- * Includes logic for handling global Rollbar instance, else initializing Rollbar here.
+ * Wortks with a global Rollbar instance that is already initialized.
+ * Note this expects rollbar to be loaded in the head, not via an npm module.
  * See https://rollbar.com/docs/notifier/rollbar.js/#quick-start for details on
  * integrating Rollbar in client apps
  *
@@ -18,23 +20,21 @@ const isGlobalRollbarConfigured = () => get(global.Rollbar, 'options.accessToken
  * @param {String} options.codeVersion
  */
 export default function RollbarLogger({ token, environment, codeVersion }) {
-  if (global.Rollbar && isGlobalRollbarConfigured()) {
-    // Rollbar is loaded globally (ie, the quick-start snippet has been pasted into the document's head)
-  } else {
-    // Init Rollbar here
-    Rollbar.init({
-      accessToken: token,
-      captureUncaught: true,
-      captureUnhandledRejections: true,
-      payload: {
-        environment,
-        javascipt: {
-          code_version: codeVersion,
-          source_map_enabled: true
-        }
+  // Rollbar may already be initialized, but thats ok
+  // https://rollbar.com/docs/notifier/rollbar.js/configuration/
+  Rollbar.configure({
+    accessToken: token,
+    environment,
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+    payload: {
+      environment,
+      javascript: {
+        code_version: codeVersion,
+        source_map_enabled: true
       }
-    });
-  }
+    }
+  });
 }
 
 /**
