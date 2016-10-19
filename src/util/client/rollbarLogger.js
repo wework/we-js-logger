@@ -3,10 +3,8 @@ import omit from 'lodash/omit';
 import get from 'lodash/get';
 import { bunyanLevelToRollbarLevelName } from '../common/rollbar';
 
-const Rollbar = global.Rollbar;
-
-// An unconfigured Rollbar has an accessToken of "undefined" by default
-export const isGlobalRollbarConfigured = () => get(Rollbar, 'options.accessToken', 'undefined') !== 'undefined';
+// Rollbar script exposes this global immediately, whether or not its already initialized
+export const isGlobalRollbarConfigured = () => !!get(global, 'Rollbar');
 
 /**
  * Custom rollbar stream that transports to logentries from a browser
@@ -22,7 +20,7 @@ export const isGlobalRollbarConfigured = () => get(Rollbar, 'options.accessToken
 export default function RollbarLogger({ token, environment, codeVersion }) {
   // Rollbar may already be initialized, but thats ok
   // https://rollbar.com/docs/notifier/rollbar.js/configuration/
-  Rollbar.configure({
+  global.Rollbar.configure({
     accessToken: token,
     environment,
     captureUncaught: true,
@@ -47,5 +45,5 @@ RollbarLogger.prototype.write = function (data = {}) {
   const scopeData = omit(data, ['req', 'level']);
 
   // https://rollbar.com/docs/notifier/rollbar.js/#usage
-  Rollbar.scope(scopeData)[rollbarLevelName](data.msg, data.err);
+  global.Rollbar.scope(scopeData)[rollbarLevelName](data.msg, data.err);
 };
