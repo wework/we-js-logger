@@ -5,7 +5,7 @@ import get from 'lodash/get';
 import { bunyanLevelToRollbarLevelName } from '../common/rollbar';
 
 // An unconfigured Rollbar has an accessToken of "undefined" by default
-const isGlobalRollbarConfigured = () => _.get(global.Rollbar, 'options.accessToken', 'undefined') !== 'undefined';
+const isGlobalRollbarConfigured = () => get(global.Rollbar, 'options.accessToken', 'undefined') !== 'undefined';
 
 /**
  * Custom rollbar stream that transports to logentries from a browser
