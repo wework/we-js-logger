@@ -1,7 +1,11 @@
 import Rollbar from 'rollbar';
 import bunyan from 'bunyan';
 import omit from 'lodash/omit';
+import get from 'lodash/get';
 import { bunyanLevelToRollbarLevelName } from '../common/rollbar';
+
+// An unconfigured Rollbar has an accessToken of "undefined" by default
+const isGlobalRollbarConfigured = () => _.get(global.Rollbar, 'options.accessToken', 'undefined') !== 'undefined';
 
 /**
  * Custom rollbar stream that transports to logentries from a browser
@@ -14,7 +18,7 @@ import { bunyanLevelToRollbarLevelName } from '../common/rollbar';
  * @param {String} options.codeVersion
  */
 export default function RollbarLogger({ token, environment, codeVersion }) {
-  if (global.Rollbar && global.Rollbar.options.accessToken && global.Rollbar.accessToken !== 'undefined') {
+  if (global.Rollbar && isGlobalRollbarConfigured()) {
     // Rollbar is loaded globally (ie, the quick-start snippet has been pasted into the document's head)
   } else {
     // Init Rollbar here

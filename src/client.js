@@ -1,12 +1,12 @@
-/**
- * @module we-js-logger/client
- * @description A logger than can be used in browsers
- */
 import Logger from './util/common/logger';
 import ClientConsoleLogger from './util/client/consoleLogger';
 import ClientLogentriesLogger from './util/client/logentriesLogger';
 import ClientRollbarLogger from './util/client/rollbarLogger';
 
+/**
+ * @module we-js-logger/client
+ * @description A logger than can be used in browsers
+ */
 export default class ClientLogger extends Logger {
   getStreams() {
     // Any passed in streams
