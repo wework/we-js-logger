@@ -17,6 +17,7 @@ export default class NodeLogger extends Logger {
     // Nice output to stdout
     if (this.stdout) {
       streams.push({
+        name: 'stdout',
         level: this.level,
         stream: bunyanFormat({ outputMode: 'short' }),
         type: 'stream'

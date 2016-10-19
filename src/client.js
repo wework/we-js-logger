@@ -15,6 +15,7 @@ export default class ClientLogger extends Logger {
     // Nice console output
     if (this.stdout) {
       streams.push({
+        name: 'stdout',
         level: this.level,
         stream: new ClientConsoleLogger(),
         type: 'raw'
