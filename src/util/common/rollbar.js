@@ -1,3 +1,5 @@
+import bunyan from 'bunyan';
+
 /**
  * @module we-js-logger/util/common/rollbar
  * @description Shared rollbar helpers
