@@ -1,6 +1,6 @@
 {
   "name": "we-js-logger",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A logger for Node and Browser JS with Rollbar and Logentries transports",
   "author": "WeWork Digital <dev-team@wework.com>",
   "contributors": [
