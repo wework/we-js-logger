@@ -65,7 +65,8 @@
     "le_js": "git://github.com/logentries/le_js.git#56addf6c71c7f9454eb49b1a12d97037c3715bb9",
     "le_node": "^1.6.7",
     "lodash": "^4.16.4",
-    "rollbar": "^0.6.2"
+    "rollbar": "^0.6.2",
+    "uuid": "2.0.3"
   },
   "devDependencies": {
     "auto-changelog": "0.3.1",
