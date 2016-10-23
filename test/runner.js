@@ -8,3 +8,11 @@ global.expect = chai.expect;
 global.should = chai.should;
 global.assert = chai.assert;
 global.sinon = sinon;
+
+// Sandbox sinon for each test
+beforeEach(() => {
+  global.sinon = sinon.sandbox.create();
+});
+afterEach(() => {
+  global.sinon.restore();
+});

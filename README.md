@@ -74,12 +74,15 @@ Providing the `Logger` constructor a `logentriesToken` option enables this trans
 
 # Rollbar Integration
 
+## Node
 For node usage, this library will initialize Rollbar.
-For browser usage, this library will only initialize Rollbar if it hasn't been loaded already.
-
-See https://rollbar.com/docs/notifier/rollbar.js/#quick-start for documentation on setting up Rollbar for browser applications
 
 See https://rollbar.com/docs/notifier/node_rollbar/ for documentation on setting up Rollbar for node processes.
+
+## Browser
+For browser usage, this library expects Rollbar to be loaded via their quick-start script tag. This also allows Rollbar to capture any errors before the logger's initialization code, if that's important to you.
+
+See https://rollbar.com/docs/notifier/rollbar.js/#quick-start for documentation on setting up Rollbar for browser applications
 
 # Development
 
@@ -135,11 +138,12 @@ $ npm run dist
 ```
 
 ### Release
-We're using `np` to simplify publishing to npm. We have two targets pre-configured, for others go ahead and use `np` directly.
+We're using `np` to simplify publishing to git + npm. A changelog and docs are generated as part of this script.
 
 ```shell
-$ npm run release:pre   # prerelease
-$ npm run release:patch # patch release
+$ npm run release <semver level/version>
+$ npm run release patch # patch release
+$ npm run release 100.10.1 # release specific version
 ```
 
 
