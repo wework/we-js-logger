@@ -119,6 +119,12 @@ Runs node tests only
 $ npm run test:node
 ```
 
+### TDD
+Runs browser and node tests in watch mode, re-bundles on src file change
+```shell
+$ npm run tdd
+```
+
 ### Docs
 Regenerate `API.md` docs from JSDoc comments
 ```shell

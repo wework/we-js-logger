@@ -20,19 +20,25 @@
   "browser": "dist/client.js",
   "scripts": {
     "test": "npm run test:browser && npm run test:node",
+    "tdd": "npm-run-all --parallel test:*:tdd",
     "test:ci": "npm run test:browser && npm run test:node:ci",
     "test:browser": "NODE_ENV=test karma start test/karma.conf.js",
-    "test:node": "NODE_ENV=test nyc mocha -r test/runner test/specs/**/*.js",
+    "test:browser:tdd": "npm run test:browser -- --auto-watch --no-single-run",
+    "test:node": "NODE_ENV=test nyc mocha test/runner test/specs/**/*.js",
+    "test:node:tdd": "npm run test:node -- --cache --watch",
     "test:node:ci": "npm run test:node && nyc report --reporter=text-lcov | coveralls",
+    "test:bundle:tdd": "npm-run-all -l --parallel 'bundle:* -- --watch'",
     "eslint": "eslint src test",
     "clean": "rimraf dist && mkdirp dist",
-    "bundle": "rollup -c rollup.client.config.js && rollup -c rollup.node.config.js",
+    "bundle": "npm-run-all -l --parallel bundle:node bundle:browser",
+    "bundle:node": "rollup -c --environment RUNTIME_ENV:node",
+    "bundle:browser": "rollup -c --environment RUNTIME_ENV:client",
     "start": "npm test && npm run dist",
     "dist": "npm run eslint && npm run clean && npm run bundle && npm run docs",
     "docs": "documentation build src/client.js src/node.js --github --format md --output API.md",
     "pretest": "npm run bundle",
     "preversion": "npm run dist; git add API.md",
-    "version": "auto-changelog --package; git add CHANGELOG.md",
+    "version": "auto-changelog --template compact --package; git add CHANGELOG.md",
     "release": "np"
   },
   "repository": {
@@ -53,7 +59,14 @@
     "logentries",
     "bunyan"
   ],
-  "peerDependencies": {},
+  "dependencies": {
+    "bunyan": "^1.8.2",
+    "bunyan-format": "^0.2.1",
+    "le_js": "git://github.com/logentries/le_js.git#56addf6c71c7f9454eb49b1a12d97037c3715bb9",
+    "le_node": "^1.6.7",
+    "lodash": "^4.16.4",
+    "rollbar": "^0.6.2"
+  },
   "devDependencies": {
     "auto-changelog": "0.3.1",
     "babel-core": "6.17.0",
@@ -81,23 +94,19 @@
     "mkdirp": "0.5.1",
     "mocha": "3.1.2",
     "np": "2.9.0",
+    "npm-run-all": "3.1.1",
     "nyc": "8.3.1",
     "phantomjs-prebuilt": "2.1.13",
     "rimraf": "2.5.4",
     "rollup": "0.36.3",
     "rollup-plugin-babel": "2.6.1",
+    "rollup-plugin-cleanup": "0.1.4",
+    "rollup-plugin-conditional": "0.1.4",
     "rollup-plugin-filesize": "1.0.0",
+    "rollup-watch": "2.5.0",
     "semver": "5.3.0",
     "sinon": "1.17.6",
     "sinon-chai": "2.8.0",
     "webpack": "1.13.2"
-  },
-  "dependencies": {
-    "bunyan": "1.8.2",
-    "bunyan-format": "0.2.1",
-    "le_js": "git://github.com/logentries/le_js.git#56addf6c71c7f9454eb49b1a12d97037c3715bb9",
-    "le_node": "1.6.7",
-    "lodash": "4.16.4",
-    "rollbar": "0.6.2"
   }
 }

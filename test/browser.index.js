@@ -4,7 +4,7 @@ require('./runner');
 // shim global rollbar
 global.Rollbar = {
   options: {
-    accessToken: 'testShim',
+    accessToken: 'testShim'
   },
   configure: _.noop,
   scope: _.noop,
@@ -13,8 +13,8 @@ global.Rollbar = {
   warning: _.noop,
   info: _.noop,
   debug: _.noop,
-  log: _.noop,
-}
+  log: _.noop
+};
 
 // require all `/test/specs/**/*.js`
 const testsContext = require.context('./specs/', true, /\.js$/);
