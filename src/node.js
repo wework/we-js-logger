@@ -5,7 +5,6 @@ import Rollbar from 'rollbar';
 import bunyanFormat from 'bunyan-format';
 import ServerRollbarLogger from './util/server/rollbarLogger';
 import ServerLogentriesLogger from './util/server/logentriesLogger';
-import RollbarLogger from './util/server/rollbarLogger';
 import createRequestLogger from './util/server/requestLogger';
 
 /**

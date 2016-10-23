@@ -1,7 +1,5 @@
-// Require the package. For client tests, webpack should resolve to the browser version automatically.
-import _ from 'lodash';
-import bunyan from 'bunyan';
-
+// Require the package. For client tests, webpack should
+// resolve to the browser version automatically.
 import Logger from '../../';
 import TestLogger from '../testLogger';
 

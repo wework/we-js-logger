@@ -55,7 +55,9 @@ function getStreams(config) {
       });
     }
   } else {
+    /* eslint-disable no-console */
     console.warn('Client rollbar is not correctly configured');
+    /* eslint-enable */
   }
 
   // Transport client logs
