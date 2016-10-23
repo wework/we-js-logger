@@ -34,7 +34,7 @@ export default {
   moduleName: pkgName,
   plugins: [
     conditional({
-      condition: true, // TODO remove need to babel in node and change this to runtimeEnv === 'client',
+      condition: runtimeEnv === 'client',
       plugin: babel({
         exclude: './node_modules/**',
         moduleIds: true,

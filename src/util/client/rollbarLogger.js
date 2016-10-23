@@ -17,7 +17,7 @@ export const isGlobalRollbarConfigured = () => !!get(global, 'Rollbar');
  * @param {String} options.environment
  * @param {String} options.codeVersion
  */
-export default function RollbarLogger({ token, environment, codeVersion }) {
+export default function ClientRollbarLogger({ token, environment, codeVersion }) {
   // Rollbar may already be initialized, but thats ok
   // https://rollbar.com/docs/notifier/rollbar.js/configuration/
   global.Rollbar.configure({
@@ -40,7 +40,7 @@ export default function RollbarLogger({ token, environment, codeVersion }) {
  * @param  {Object} data
  * @returns {undefined}
  */
-RollbarLogger.prototype.write = function (data = {}) {
+ClientRollbarLogger.prototype.write = function (data = {}) {
   const rollbarLevelName = bunyanLevelToRollbarLevelName(data.level);
   const scopeData = omit(data, ['req', 'level']);
 

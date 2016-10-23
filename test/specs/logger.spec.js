@@ -5,7 +5,8 @@ import bunyan from 'bunyan';
 import Logger from '../../';
 import TestLogger from '../testLogger';
 
-// Logentries validates this token, this is fake one in an acceptable format
+// Logentries validates the token it is passed,
+// here is a fake one in an acceptable format
 const fakeToken = '00000000-0000-0000-0000-000000000000';
 
 describe('we-js-logger', () => {
@@ -14,17 +15,8 @@ describe('we-js-logger', () => {
     expect(new Logger()).to.be.ok;
   });
 
+
   describe('options', () => {
-    it('accepts a level', () => {
-      const info = new Logger({ level: 'info' });
-      const debug = new Logger({ level: 'debug' });
-      const fatal = new Logger({ level: 'fatal' });
-
-      expect(info._level).to.equal(bunyan.INFO);
-      expect(debug._level).to.equal(bunyan.DEBUG);
-      expect(fatal._level).to.equal(bunyan.FATAL);
-    });
-
     it('accepts a name', () => {
       const name = 'WeTest!';
       const log = new Logger({ name });
@@ -60,6 +52,8 @@ describe('we-js-logger', () => {
         msg,
         foo: 'bar'
       }, 'Uses the custom stream');
+
+      // TODO test that logs at a higher level dont go to the transport
     });
 
     it('accepts a stdout flag', () => {
@@ -131,8 +125,21 @@ describe('we-js-logger', () => {
     it('has a #trace method', () => {
       expect(log.trace).to.be.a('function');
     });
+
+    // FIXME find a better way to do this. Should we use `env-universal`?
+    if (typeof document === 'undefined') {
+      describe('Node Only', () => {
+        it('exposes a requestLogger middleware', () => {
+          expect(log.requestLogger).to.be.a('function');
+        });
+        it('exposes a rollbarErrorMiddleware middleware', () => {
+          expect(log.rollbarErrorMiddleware).to.be.a('function');
+        });
+      });
+    }
   });
 
   describe.skip('Rollbar Transport', () => {});
+
   describe.skip('Logentries Transport', () => {});
 });

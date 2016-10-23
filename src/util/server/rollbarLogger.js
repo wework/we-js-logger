@@ -5,11 +5,10 @@ import bunyan from 'bunyan';
 import { bunyanLevelToRollbarLevelName } from '../common/rollbar';
 
 /**
- * @module we-js-logger/util/server/rollbarLogger
- * @description Custom bunyan stream that transports to Rollbar from a node process.
- *              See https://rollbar.com/docs/notifier/node_rollbar/ for integration details
+ * Custom bunyan stream that transports to Rollbar from a node process.
+ * See https://rollbar.com/docs/notifier/node_rollbar/ for integration details
  */
-export default function RollbarLogger({ token, codeVersion, environment }) {
+export default function ServerRollbarLogger({ token, codeVersion, environment }) {
   // https://rollbar.com/docs/notifier/node_rollbar/#configuration-reference
   Rollbar.init(token, {
     handleUncaughtExceptionsAndRejections: true,
@@ -26,19 +25,14 @@ export default function RollbarLogger({ token, codeVersion, environment }) {
  * @param  {Object} data
  * @returns {undefined}
  */
-RollbarLogger.prototype.write = function (data = {}) {
+ServerRollbarLogger.prototype.write = function (data = {}) {
   const rollbarLevelName = bunyanLevelToRollbarLevelName(data.level);
   const scopeData = omit(data, ['req', 'level']);
+  const payload = Object.assign({ level: rollbarLevelName }, scopeData);
 
   if (data.err && isError(data.err)) {
-    Rollbar.handleErrorWithPayloadData(data.err, {
-      level: rollbarLevelName,
-      ...scopeData
-    }, data.req);
+    Rollbar.handleErrorWithPayloadData(data.err, payload, data.req);
   } else {
-    Rollbar.reportMessageWithPayloadData(data.msg, {
-      level: rollbarLevelName,
-      ...scopeData
-    }, data.req);
+    Rollbar.reportMessageWithPayloadData(data.msg, payload, data.req);
   }
 };
