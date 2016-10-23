@@ -1,7 +1,6 @@
 import Rollbar from 'rollbar';
 import omit from 'lodash/omit';
 import isError from 'lodash/isError';
-import bunyan from 'bunyan';
 import { bunyanLevelToRollbarLevelName } from '../common/rollbar';
 
 /**
