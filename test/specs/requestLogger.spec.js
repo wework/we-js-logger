@@ -38,6 +38,7 @@ if (typeof document === 'undefined') {
         cb = sinon.stub();
 
         logger = new Logger({
+          stdout: false,
           streams: [
             { type: 'raw', stream: new TestLogger({ cb }) }
           ]

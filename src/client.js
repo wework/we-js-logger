@@ -1,5 +1,5 @@
 import bunyan from 'bunyan';
-import { assembleConfig, DEFAULT_CONFIG } from './util/common/config';
+import { assembleConfig, toBunyanConfig } from './util/common/config';
 
 import ClientConsoleLogger from './util/client/consoleLogger';
 import ClientLogentriesLogger from './util/client/logentriesLogger';
@@ -10,9 +10,9 @@ import ClientRollbarLogger, { isGlobalRollbarConfigured } from './util/client/ro
  * @param   {Object} config
  * @returns {Object} - a preconfigured `bunyan` logger instance
  */
-export default function ClientLogger(config = DEFAULT_CONFIG) {
+export default function ClientLogger(config = {}) {
   const clientConfig = assembleConfig(config, getStreams);
-  return bunyan.createLogger(clientConfig);
+  return bunyan.createLogger(toBunyanConfig(clientConfig));
 }
 
 /**

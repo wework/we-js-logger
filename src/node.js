@@ -1,5 +1,5 @@
 import bunyan from 'bunyan';
-import { assembleConfig, DEFAULT_CONFIG } from './util/common/config';
+import { assembleConfig, toBunyanConfig } from './util/common/config';
 
 import Rollbar from 'rollbar';
 import bunyanFormat from 'bunyan-format';
@@ -12,9 +12,9 @@ import createRequestLogger from './util/server/requestLogger';
  * @param   {Object} config
  * @returns {Object} - a preconfigured `bunyan` logger instance
  */
-export default function NodeLogger(config = DEFAULT_CONFIG) {
+export default function NodeLogger(config = {}) {
   const serverConfig = assembleConfig(config, getStreams);
-  const logger = bunyan.createLogger(serverConfig);
+  const logger = bunyan.createLogger(toBunyanConfig(serverConfig));
 
   // Attach a few extras to instances of NodeLogger
   logger.requestLogger = createRequestLogger(logger, serverConfig);

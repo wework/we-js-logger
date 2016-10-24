@@ -102,31 +102,58 @@ describe('we-js-logger', () => {
   describe('instance', () => {
     let log;
     beforeEach(() => {
-      log = new Logger();
+      log = new Logger({
+        release: { foo: 'bar' }
+      });
     });
 
-    it('has a #fatal method', () => {
-      expect(log.fatal).to.be.a('function');
-    });
-    it('has a #error method', () => {
-      expect(log.error).to.be.a('function');
-    });
-    it('has a #warn method', () => {
-      expect(log.warn).to.be.a('function');
-    });
-    it('has a #info method', () => {
-      expect(log.info).to.be.a('function');
-    });
-    it('has a #debug method', () => {
-      expect(log.debug).to.be.a('function');
-    });
-    it('has a #trace method', () => {
-      expect(log.trace).to.be.a('function');
-    });
+    describe('root fields', () => {
+      it('has extra root fields "release" and "environment" by default', () => {
+        expect(log.fields).to.have.property('release');
+        expect(log.fields).to.have.property('environment');
+      });
+
+      it('does not have extra root fields, such as "rollbarToken"', () => {
+        expect(log.fields).not.to.have.property('rollbarToken');
+        expect(log.fields).not.to.have.property('logentriesToken');
+        expect(log.fields).not.to.have.property('stdout');
+      });
+
+      it('can be configured to include any keys', () => {
+        const customLog = new Logger({
+          rootFields: [ 'badIdea' ],
+          badIdea: 'supersecret',
+          release: { foo: 'not gonna be included unless specified in rootFields' }
+        })
+        expect(customLog.fields).to.have.property('badIdea');
+        expect(customLog.fields).not.to.have.property('release');
+      });
+    })
+
+    describe('log methods', () => {
+      it('has a #fatal method', () => {
+        expect(log.fatal).to.be.a('function');
+      });
+      it('has a #error method', () => {
+        expect(log.error).to.be.a('function');
+      });
+      it('has a #warn method', () => {
+        expect(log.warn).to.be.a('function');
+      });
+      it('has a #info method', () => {
+        expect(log.info).to.be.a('function');
+      });
+      it('has a #debug method', () => {
+        expect(log.debug).to.be.a('function');
+      });
+      it('has a #trace method', () => {
+        expect(log.trace).to.be.a('function');
+      });
+    })
 
     // FIXME find a better way to do this. Should we use `env-universal`?
     if (typeof document === 'undefined') {
-      describe('Node Only', () => {
+      describe('node only', () => {
         it('exposes a requestLogger middleware', () => {
           expect(log.requestLogger).to.be.a('function');
         });
