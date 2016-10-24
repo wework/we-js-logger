@@ -22,11 +22,9 @@ export const DEFAULT_CONFIG = Object.freeze({
  * @returns {Object} runtimeConfig
  */
 export function assembleConfig(config, getStreamsForRuntime) {
-  return Object.assign({},
-    DEFAULT_CONFIG,
-    config,
-    {
-      streams: getStreamsForRuntime(config)
-    }
-  );
+  const baseConfig = Object.assign({}, DEFAULT_CONFIG, config);
+
+  return Object.assign(baseConfig, {
+    streams: getStreamsForRuntime(baseConfig)
+  });
 }

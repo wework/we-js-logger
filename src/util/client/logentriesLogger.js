@@ -7,8 +7,9 @@ import LE from 'le_js';
 * @param {String} options.token
 * @param {String} options.level
 */
-export default function ClientLogentriesLogger({ token }) {
-  LE.init({
+export default function ClientLogentriesLogger({ name, token }) {
+  this.logentries = LE.createLogStream({
+    name,
     token,
     no_format: true,
     page_info: 'per-page'
@@ -22,9 +23,9 @@ export default function ClientLogentriesLogger({ token }) {
 */
 ClientLogentriesLogger.prototype.write = function (data = {}) {
   const level = bunyan.nameFromLevel[data.level];
-  if (isFunction(LE[level])) {
-    LE[level](data);
+  if (isFunction(this.logentries[level])) {
+    this.logentries[level](data);
   } else {
-    LE.log(data);
+    this.logentries.log(data);
   }
 };
