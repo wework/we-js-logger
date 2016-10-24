@@ -6,10 +6,10 @@ const DEFAULT_HEADER_NAME = 'x-request-id';
  * Create a request loging express middleware
  * @param  {Object}  logger - a logger instance
  * @param  {Object}  options
- * @param  {String?} options.headerName
+ * @param  {String?} options.reqIdHeader
  * @returns {Function}
  */
-export default function createRequestLogger(logger, options = { headerName: DEFAULT_HEADER_NAME }) {
+export default function createRequestLogger(logger, { reqIdHeader = DEFAULT_HEADER_NAME } = {}) {
 
   /**
    * Request Logger Middleware
@@ -22,13 +22,13 @@ export default function createRequestLogger(logger, options = { headerName: DEFA
    * @returns {undefined}
    */
   return function requestLoggerMiddleware(req, res, next) {
-    const id = req.get(options.headerName) || uuid.v4();
+    const id = req.get(reqIdHeader) || uuid.v4();
     let log = logger.child({ component: 'request', req_id: id, req });
 
     // attach a logger to each request
     req.log = log;
 
-    res.setHeader(options.headerName, id);
+    res.setHeader(reqIdHeader, id);
 
     log.info('start request');
 
