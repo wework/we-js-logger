@@ -30,8 +30,14 @@ module.exports = {
       sinon: 'sinon/pkg/sinon'
     }
   },
+
+  // Shim unnecessary node-only deps in client builds
+  // https://github.com/trentm/node-bunyan#webpack
   node: {
     fs: 'empty',
-    module: 'empty',
+    mv: 'empty',
+    'dtrace-provider': 'empty',
+    'safe-json-stringify': 'empty',
+    'source-map-support': 'empty',
   }
 };
