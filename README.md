@@ -164,8 +164,8 @@ $ npm run release 100.10.1 # release specific version
 [travis-url]:https://travis-ci.org/wework/we-js-logger
 [travis-image]: https://travis-ci.org/wework/we-js-logger.svg?branch=master
 
-[saucelabs-image]:https://saucelabs.com/browser-matrix/we-js-logger.svg
-[saucelabs-url]:https://saucelabs.com/u/we-js-logger
+[saucelabs-image]:https://saucelabs.com/browser-matrix/wework-we-js-logger.svg
+[saucelabs-url]:https://saucelabs.com/u/wework-we-js-logger
 
 [license-url]: LICENSE
 [license-image]: http://img.shields.io/badge/license-MIT-000000.svg?style=flat-square
