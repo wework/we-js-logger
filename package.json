@@ -69,7 +69,7 @@
   "dependencies": {
     "bunyan": "^1.8.2",
     "bunyan-format": "^0.2.1",
-    "le_js": "git://github.com/logentries/le_js.git#56addf6c71c7f9454eb49b1a12d97037c3715bb9",
+    "le_js": "git://github.com/nason/le_js.git#7a75be7c1dd2438e3f1183a68bd2162b80bc94d8",
     "le_node": "^1.6.7",
     "lodash": "^4.16.4",
     "rollbar": "^0.6.2",
