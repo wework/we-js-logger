@@ -73,7 +73,7 @@
     "le_node": "^1.6.7",
     "lodash": "^4.17.1",
     "rollbar": "^0.6.2",
-    "uuid": "3.0.0"
+    "uuid": "3.0.1"
   },
   "devDependencies": {
     "auto-changelog": "0.3.1",
