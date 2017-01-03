@@ -35,7 +35,8 @@ export const DEFAULT_CONFIG = Object.freeze({
   serializers: bunyan.stdSerializers,
   logentriesToken: null,
   rollbarToken: null,
-  rootFields: DEFAULT_ROOT_FIELDS
+  rootFields: DEFAULT_ROOT_FIELDS,
+  scrubFields: [],
 });
 
 /**

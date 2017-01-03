@@ -29,7 +29,8 @@ const log = new Logger({
     level: 'debug',
     codeVersion: process.env.SHA_VERSION,
     logentriesToken: process.env.LOGENTRIES_TOKEN,
-    rollbarToken: process.env.ROLLBAR_TOKEN
+    rollbarToken: process.env.ROLLBAR_TOKEN,
+    scrubFields: ['password'], // blacklist field keys being sent through logger
 });
 ```
 

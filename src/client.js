@@ -49,7 +49,8 @@ function getStreams(config) {
         stream: new ClientRollbarLogger({
           token: config.rollbarToken,
           environment: config.environment,
-          codeVersion: config.codeVersion
+          codeVersion: config.codeVersion,
+          scrubFields: config.scrubFields,
         }),
         type: 'raw'
       });

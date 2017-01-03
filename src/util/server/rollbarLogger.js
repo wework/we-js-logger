@@ -7,12 +7,13 @@ import { bunyanLevelToRollbarLevelName } from '../common/rollbar';
  * Custom bunyan stream that transports to Rollbar from a node process.
  * See https://rollbar.com/docs/notifier/node_rollbar/ for integration details
  */
-export default function ServerRollbarLogger({ token, codeVersion, environment }) {
+export default function ServerRollbarLogger({ token, codeVersion, environment, scrubFields }) {
   // https://rollbar.com/docs/notifier/node_rollbar/#configuration-reference
   Rollbar.init(token, {
     handleUncaughtExceptionsAndRejections: true,
     codeVersion,
-    environment
+    environment,
+    scrubFields,
   });
 }
 

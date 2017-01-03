@@ -71,7 +71,7 @@ describe('we-js-logger', () => {
         logentriesToken: fakeToken
       });
 
-      // The actual logentries steam differs based on runtime env, just
+      // The actual logentries stream differs based on runtime env, just
       // asserting one is there
       expect(log.streams.find((config) => {
         return config.name === 'logentries';
@@ -87,7 +87,7 @@ describe('we-js-logger', () => {
         rollbarToken: fakeToken
       });
 
-      // The actual rollbar steam differs based on runtime env, just
+      // The actual rollbar stream differs based on runtime env, just
       // asserting one is there
       expect(log.streams.find((config) => {
         return config.name === 'rollbar';
@@ -116,6 +116,7 @@ describe('we-js-logger', () => {
       it('does not have extra root fields, such as "rollbarToken"', () => {
         expect(log.fields).not.to.have.property('rollbarToken');
         expect(log.fields).not.to.have.property('logentriesToken');
+        expect(log.fields).not.to.have.property('scrubFields');
         expect(log.fields).not.to.have.property('stdout');
       });
 
