@@ -16,7 +16,7 @@ export const isGlobalRollbarConfigured = () => !!get(global, 'Rollbar');
  * @param {String} options.environment
  * @param {String} options.codeVersion
  */
-export default function ClientRollbarLogger({ token, environment, codeVersion }) {
+export default function ClientRollbarLogger({ token, environment, codeVersion, scrubFields }) {
   // Rollbar may already be initialized, but thats ok
   // https://rollbar.com/docs/notifier/rollbar.js/configuration/
   global.Rollbar.configure({
@@ -30,7 +30,8 @@ export default function ClientRollbarLogger({ token, environment, codeVersion })
         code_version: codeVersion,
         source_map_enabled: true
       }
-    }
+    },
+    scrubFields,
   });
 }
 
