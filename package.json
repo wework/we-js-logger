@@ -111,7 +111,7 @@
     "nyc": "10.0.0",
     "phantomjs-prebuilt": "2.1.14",
     "rimraf": "2.5.4",
-    "rollup": "0.40.0",
+    "rollup": "0.40.1",
     "rollup-plugin-babel": "2.7.1",
     "rollup-plugin-cleanup": "0.1.4",
     "rollup-plugin-conditional": "0.1.4",
