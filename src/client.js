@@ -1,5 +1,8 @@
 import bunyan from 'bunyan';
-import { assembleConfig, toBunyanConfig } from './util/common/config';
+import hideSecrets from 'hide-secrets';
+import { get, forEach } from 'lodash';
+
+import { assembleConfig, toBunyanConfig, BUNYAN_LOGGER_LEVELS } from './util/common/config';
 
 import ClientConsoleLogger from './util/client/consoleLogger';
 import ClientLogentriesLogger from './util/client/logentriesLogger';
@@ -12,8 +15,30 @@ import ClientRollbarLogger, { isGlobalRollbarConfigured } from './util/client/ro
  */
 export default function ClientLogger(config = {}) {
   const clientConfig = assembleConfig(config, getStreams);
-  return bunyan.createLogger(toBunyanConfig(clientConfig));
+  const logger = bunyan.createLogger(toBunyanConfig(clientConfig));
+
+  // Attach a few extras to instances of ClientLogger
+  logger.config = config;
+
+  return logger;
 }
+
+// Extend child function to give _emit access to config in log children
+const originalChild = bunyan.prototype.child;
+bunyan.prototype.child = function(options, simple) {
+  const childLogger = originalChild.call(this, options, simple);
+  childLogger.config = this.config;
+  return childLogger;
+}
+
+// Overwrite logger functions to scrub out all fields, including pre stringified msg
+forEach(BUNYAN_LOGGER_LEVELS, (type) => {
+  const original = bunyan.prototype[type];
+  bunyan.prototype[type] = function(...args) {
+    const newArgs = args.map((arg) => hideSecrets(arg, { badWords: get(this.config, 'scrubFields', []) }));
+    return original.apply(this, newArgs);
+  }
+});
 
 /**
  * Add standard Client logger streams to `config.streams`
@@ -50,7 +75,6 @@ function getStreams(config) {
           token: config.rollbarToken,
           environment: config.environment,
           codeVersion: config.codeVersion,
-          scrubFields: config.scrubFields,
         }),
         type: 'raw'
       });

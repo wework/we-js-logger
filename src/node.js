@@ -1,5 +1,8 @@
 import bunyan from 'bunyan';
-import { assembleConfig, toBunyanConfig } from './util/common/config';
+import hideSecrets from 'hide-secrets';
+import { get, forEach } from 'lodash';
+
+import { assembleConfig, toBunyanConfig, BUNYAN_LOGGER_LEVELS } from './util/common/config';
 
 import Rollbar from 'rollbar';
 import bunyanFormat from 'bunyan-format';
@@ -17,11 +20,29 @@ export default function NodeLogger(config = {}) {
   const logger = bunyan.createLogger(toBunyanConfig(serverConfig));
 
   // Attach a few extras to instances of NodeLogger
+  logger.config = config;
   logger.requestLogger = createRequestLogger(logger, serverConfig);
   logger.rollbarErrorMiddleware = Rollbar.errorHandler(serverConfig.rollbarToken);
 
   return logger;
 }
+
+// Extend child function to give _emit access to config in log children
+const originalChild = bunyan.prototype.child;
+bunyan.prototype.child = function(options, simple) {
+  const childLogger = originalChild.call(this, options, simple);
+  childLogger.config = this.config;
+  return childLogger;
+}
+
+// Overwrite logger functions to scrub out all fields, including pre stringified msg
+forEach(BUNYAN_LOGGER_LEVELS, (type) => {
+  const original = bunyan.prototype[type];
+  bunyan.prototype[type] = function(...args) {
+    const newArgs = args.map((arg) => hideSecrets(arg, { badWords: get(this.config, 'scrubFields', []) }));
+    return original.apply(this, newArgs);
+  }
+});
 
 /**
  * Add standard Node logger streams to `config.streams`
@@ -56,7 +77,6 @@ function getStreams(config) {
         token: config.rollbarToken,
         environment: config.environment,
         codeVersion: config.codeVersion,
-        scrubFields: config.scrubFields,
       }),
       type: 'raw'
     });
