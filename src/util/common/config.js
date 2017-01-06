@@ -24,6 +24,20 @@ const DEFAULT_ROOT_FIELDS = [
   'release',
 ];
 
+/**
+ * Array of bunyan's different log levels.
+ * https://github.com/trentm/node-bunyan#levels
+ * @type {Array}
+ */
+export const BUNYAN_LOGGER_LEVELS = [
+  'trace',
+  'debug',
+  'info',
+  'warn',
+  'error',
+  'fatal',
+]
+
 /** @type {Object} default config to Logger classes */
 export const DEFAULT_CONFIG = Object.freeze({
   name: 'WeWork',

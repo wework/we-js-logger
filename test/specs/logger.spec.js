@@ -99,8 +99,41 @@ describe('we-js-logger', () => {
     it.skip('accepts custom serializers', () => {});
   });
 
+  describe('config.scrubFields', () => {
+    let log;
+
+    beforeEach(() => {
+      log = new Logger({
+        release: { foo: 'bar' },
+        scrubFields: [
+          'scrubMe',
+        ],
+      });
+      log._emit = sinon.stub();
+    });
+
+    describe('hides secrets for fields', () => {
+      it('works', () => {
+        log.info({ scrubMe: 'This should be ignored', tlc: 'No Scrubs' });
+        expect(log._emit).to.have.been.calledOnce;
+        expect(log._emit.firstCall.args[0].scrubMe).to.equal('[SECRET]');
+        expect(log._emit.firstCall.args[0].tlc).to.equal('No Scrubs');
+      });
+    });
+
+    describe('hides secrets for msg', () => {
+      it('works', () => {
+        log.info('Testing Log', { scrubMe: 'This should be ignored', tlc: 'No Scrubs' });
+        expect(log._emit).to.have.been.calledOnce;
+        expect(log._emit.firstCall.args[0].msg).to.equal("Testing Log { scrubMe: '[SECRET]', tlc: 'No Scrubs' }");
+      });
+    });
+  });
+
+
   describe('instance', () => {
     let log;
+
     beforeEach(() => {
       log = new Logger({
         release: { foo: 'bar' }
