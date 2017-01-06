@@ -1,4 +1,4 @@
-import bunyan from 'bunyan';
+import bunyan, { levelFromName } from 'bunyan';
 import pick from 'lodash/pick';
 
 /**
@@ -29,14 +29,7 @@ const DEFAULT_ROOT_FIELDS = [
  * https://github.com/trentm/node-bunyan#levels
  * @type {Array}
  */
-export const BUNYAN_LOGGER_LEVELS = [
-  'trace',
-  'debug',
-  'info',
-  'warn',
-  'error',
-  'fatal',
-]
+export const BUNYAN_LOGGER_LEVELS = Object.keys(levelFromName);
 
 /** @type {Object} default config to Logger classes */
 export const DEFAULT_CONFIG = Object.freeze({
