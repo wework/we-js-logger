@@ -27,7 +27,7 @@
     "test:node": "NODE_ENV=test nyc mocha test/runner test/specs/common/**/*.js",
     "test:node:tdd": "npm run test:node -- --cache --watch",
     "test:node:ci": "npm run test:node && nyc report --reporter=text-lcov | coveralls",
-    "test:leakage": "NODE_ENV=test nyc mocha test/runner test/specs/leakage/**/*.js",
+    "test:leakage": "NODE_ENV=test mocha test/runner test/specs/leakage/**/*.js",
     "test:bundle:tdd": "npm-run-all -l --parallel 'bundle:* -- --watch'",
     "lint": "eslint --format ./node_modules/eslint-friendly-formatter --cache src test",
     "clean": "rimraf dist && mkdirp dist",
