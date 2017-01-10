@@ -19,6 +19,7 @@
   "main": "dist/node.js",
   "browser": "dist/client.js",
   "scripts": {
+    "benchmark": "node test/benchmark",
     "test": "npm run test:browser && npm run test:node && npm run test:leakage",
     "tdd": "npm-run-all --parallel test:*:tdd",
     "test:ci": "npm run test:browser && npm run test:node:ci",
@@ -87,6 +88,7 @@
     "babel-polyfill": "6.20.0",
     "babel-preset-es2015": "6.18.0",
     "babel-preset-stage-0": "6.16.0",
+    "benchmark": "2.1.3",
     "chai": "3.5.0",
     "coveralls": "2.11.15",
     "documentation": "4.0.0-beta11",
