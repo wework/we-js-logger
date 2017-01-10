@@ -1,7 +1,7 @@
 // Require the package. For client tests, webpack should
 // resolve to the browser version automatically.
-import Logger from '../../';
-import TestLogger from '../testLogger';
+import Logger from '../../../';
+import TestLogger from '../../testLogger';
 
 // Logentries validates the token it is passed,
 // here is a fake one in an acceptable format
@@ -12,7 +12,6 @@ describe('we-js-logger', () => {
     expect(Logger).to.be.a('function');
     expect(new Logger()).to.be.ok;
   });
-
 
   describe('options', () => {
     it('accepts a name', () => {

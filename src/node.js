@@ -1,8 +1,8 @@
 import bunyan from 'bunyan';
-import hideSecrets from 'hide-secrets';
-import { get, forEach } from 'lodash';
+import { forEach } from 'lodash';
 
 import { assembleConfig, toBunyanConfig, BUNYAN_LOGGER_LEVELS } from './util/common/config';
+import scrub from './util/common/scrub';
 
 import Rollbar from 'rollbar';
 import bunyanFormat from 'bunyan-format';
@@ -39,7 +39,7 @@ bunyan.prototype.child = function(options, simple) {
 forEach(BUNYAN_LOGGER_LEVELS, (type) => {
   const original = bunyan.prototype[type];
   bunyan.prototype[type] = function(...args) {
-    const newArgs = args.map((arg) => hideSecrets(arg, { badWords: get(this.config, 'scrubFields', []) }));
+    const newArgs = args.map((arg) => scrub(arg, this.config));
     return original.apply(this, newArgs);
   }
 });

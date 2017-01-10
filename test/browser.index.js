@@ -17,5 +17,5 @@ global.Rollbar = {
 };
 
 // require all `/test/specs/**/*.js`
-const testsContext = require.context('./specs/', true, /\.js$/);
+const testsContext = require.context('./specs/common', true, /\.js$/);
 testsContext.keys().forEach(testsContext);
