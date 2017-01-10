@@ -1,7 +1,7 @@
-import Logger from '../../';
-import TestLogger from '../testLogger';
+import Logger from '../../../';
+import TestLogger from '../../testLogger';
 
-import createRequestLogger from '../../src/util/server/requestLogger';
+import createRequestLogger from '../../../src/util/server/requestLogger';
 
 // Only run these tests in node
 // FIXME find a better way to do this. Should we use `env-universal`?
