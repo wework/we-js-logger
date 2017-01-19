@@ -1,8 +1,9 @@
+'use strict';
+
 import bunyan from 'bunyan';
-import { forEach } from 'lodash';
 
 import { assembleConfig, toBunyanConfig, BUNYAN_LOGGER_LEVELS } from './util/common/config';
-import scrub from './util/common/scrub';
+import logForLevel from './util/common/logForLevel';
 
 import Rollbar from 'rollbar';
 import bunyanFormat from 'bunyan-format';
@@ -12,36 +13,30 @@ import createRequestLogger from './util/server/requestLogger';
 
 /**
  * A logger than can be used in node processes
- * @param   {Object} config
- * @returns {Object} - a preconfigured `bunyan` logger instance
+ * @param   {Object}  config - we-js-logger config
+ * @param   {Object?} logger - an instance of a `bunyan` logger to use internally.
+ *                             this is meant to be used by the `child` method.
  */
-export default function NodeLogger(config = {}) {
+export default function NodeLogger(config = {}, logger) {
   const serverConfig = assembleConfig(config, getStreams);
-  const logger = bunyan.createLogger(toBunyanConfig(serverConfig));
+  logger = logger || bunyan.createLogger(toBunyanConfig(serverConfig));
 
-  // Attach a few extras to instances of NodeLogger
-  logger.config = config;
-  logger.requestLogger = createRequestLogger(logger, serverConfig);
-  logger.rollbarErrorMiddleware = Rollbar.errorHandler(serverConfig.rollbarToken);
+  this._config = config;
+  this._logger = logger;
 
-  return logger;
+  // Server-specific extras
+  this.requestLogger = createRequestLogger(this._logger, serverConfig);
+  this.rollbarErrorMiddleware = Rollbar.errorHandler(serverConfig.rollbarToken);
 }
 
-// Extend child function to give _emit access to config in log children
-const originalChild = bunyan.prototype.child;
-bunyan.prototype.child = function(options, simple) {
-  const childLogger = originalChild.call(this, options, simple);
-  childLogger.config = this.config;
-  return childLogger;
+NodeLogger.prototype.child = function () {
+  const childLogger = this._logger.child.apply(this._logger, arguments);
+  return new NodeLogger(this._config, childLogger);
 }
 
-// Overwrite logger functions to scrub out all fields, including pre stringified msg
-forEach(BUNYAN_LOGGER_LEVELS, (type) => {
-  const original = bunyan.prototype[type];
-  bunyan.prototype[type] = function(...args) {
-    const newArgs = args.map((arg) => scrub(arg, this.config));
-    return original.apply(this, newArgs);
-  }
+// Dynamically hoist + wrap bunyan log instance methods (logger.info, logger.warn, etc)
+BUNYAN_LOGGER_LEVELS.forEach(level => {
+  NodeLogger.prototype[level] = logForLevel(level);
 });
 
 /**
