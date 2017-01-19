@@ -1,7 +1,8 @@
-import bunyan from 'bunyan';
-import { forEach } from 'lodash';
+'use strict';
 
-import scrub from './util/common/scrub';
+import bunyan from 'bunyan';
+
+import logForLevel from './util/common/logForLevel';
 import { assembleConfig, toBunyanConfig, BUNYAN_LOGGER_LEVELS } from './util/common/config';
 
 import ClientConsoleLogger from './util/client/consoleLogger';
@@ -10,35 +11,28 @@ import ClientRollbarLogger, { isGlobalRollbarConfigured } from './util/client/ro
 
 /**
  * A logger than can be used in browsers
- * @param   {Object} config
- * @returns {Object} - a preconfigured `bunyan` logger instance
+ * @param   {Object}  config - we-js-logger config
+ * @param   {Object?} logger - an instance of a `bunyan` logger to use internally.
+ *                             this is meant to be used by the `child` method.
  */
-export default function ClientLogger(config = {}) {
+export default function ClientLogger(config = {}, logger) {
   const clientConfig = assembleConfig(config, getStreams);
-  const logger = bunyan.createLogger(toBunyanConfig(clientConfig));
+  logger = logger || bunyan.createLogger(toBunyanConfig(clientConfig));
 
-  // Attach a few extras to instances of ClientLogger
-  logger.config = config;
-
-  return logger;
+  this._config = config;
+  this._logger = logger;
 }
 
-// Extend child function to give _emit access to config in log children
-const originalChild = bunyan.prototype.child;
-bunyan.prototype.child = function(options, simple) {
-  const childLogger = originalChild.call(this, options, simple);
-  childLogger.config = this.config;
-  return childLogger;
+ClientLogger.prototype.child = function () {
+  const childLogger = this._logger.child.apply(this._logger, arguments);
+  return new ClientLogger(this._config, childLogger);
 }
 
-// Overwrite logger functions to scrub out all fields, including pre stringified msg
-forEach(BUNYAN_LOGGER_LEVELS, (type) => {
-  const original = bunyan.prototype[type];
-  bunyan.prototype[type] = function(...args) {
-    const newArgs = args.map((arg) => scrub(arg, this.config));
-    return original.apply(this, newArgs);
-  }
+// Dynamically hoist + wrap bunyan log instance methods (logger.info, logger.warn, etc)
+BUNYAN_LOGGER_LEVELS.forEach(level => {
+  ClientLogger.prototype[level] = logForLevel(level);
 });
+
 
 /**
  * Add standard Client logger streams to `config.streams`
