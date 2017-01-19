@@ -4,6 +4,14 @@ require('babel-polyfill');
 const chai = require('chai');
 const sinon = require('sinon');
 
+// NODE only
+// TODO better way to guard this
+// For browser tests, sinon-chai is loaded in karma config
+if (typeof document === 'undefined') {
+  const sinonChai = require('sinon-chai');
+  chai.use(sinonChai);
+}
+
 global.expect = chai.expect;
 global.should = chai.should;
 global.assert = chai.assert;

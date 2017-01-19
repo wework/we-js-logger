@@ -14,7 +14,7 @@ module.exports = function(config) {
     basePath: '../',
     autoWatch: true,
     singleRun: true,
-    frameworks: ['mocha'],
+    frameworks: ['mocha', 'sinon-chai'],
     sauceLabs: {
       testName: 'we-js-logger/client'
     },
