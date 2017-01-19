@@ -2,6 +2,7 @@
 // resolve to the browser version automatically.
 import Logger from '../..';
 import TestLogger from '../testLogger';
+import bunyan from 'bunyan';
 
 // Logentries validates the token it is passed,
 // here is a fake one in an acceptable format
@@ -179,7 +180,7 @@ describe('we-js-logger', () => {
         expect(customLog._logger.fields).to.have.property('badIdea');
         expect(customLog._logger.fields).not.to.have.property('release');
       });
-    })
+    });
 
     describe('log methods', () => {
       it('has a #fatal method', () => {
@@ -200,7 +201,30 @@ describe('we-js-logger', () => {
       it('has a #trace method', () => {
         expect(log.trace).to.be.a('function');
       });
-    })
+    });
+
+    describe('#child', () => {
+      it('calls child on the logger bunyan instance', () => {
+        sinon.spy(bunyan.prototype, 'child');
+        log.child();
+
+        expect(bunyan.prototype.child).to.have.been.calledOnce;
+      });
+
+      it('instantiates a new logger with the new child', () => {
+        const stubChild = {};
+        sinon.stub(bunyan.prototype, 'child').returns(stubChild);
+        const child = log.child();
+
+        expect(child).not.to.eql(log);
+        expect(child._logger).to.eql(stubChild);
+      });
+
+      it('instantiates a new logger with the same config', () => {
+        const child = log.child();
+        expect(child._config).to.eql(log._config);
+      });
+    });
 
     // FIXME find a better way to do this. Should we use `env-universal`?
     if (typeof document === 'undefined') {
