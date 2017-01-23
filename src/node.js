@@ -25,7 +25,7 @@ export default function NodeLogger(config = {}, logger) {
   this._logger = logger;
 
   // Server-specific extras
-  this.requestLogger = createRequestLogger(this._logger, serverConfig);
+  this.requestLogger = createRequestLogger(this, serverConfig);
   this.rollbarErrorMiddleware = Rollbar.errorHandler(serverConfig.rollbarToken);
 }
 
