@@ -83,7 +83,7 @@
     "auto-changelog": "0.3.1",
     "babel-core": "6.21.0",
     "babel-loader": "6.2.10",
-    "babel-plugin-external-helpers": "6.18.0",
+    "babel-plugin-external-helpers": "6.22.0",
     "babel-plugin-istanbul": "3.1.2",
     "babel-plugin-transform-es2015-modules-umd": "6.18.0",
     "babel-polyfill": "6.20.0",
