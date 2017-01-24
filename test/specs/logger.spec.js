@@ -1,7 +1,8 @@
 // Require the package. For client tests, webpack should
 // resolve to the browser version automatically.
-import Logger from '../../../';
-import TestLogger from '../../testLogger';
+import Logger from '../..';
+import TestLogger from '../testLogger';
+import bunyan from 'bunyan';
 
 // Logentries validates the token it is passed,
 // here is a fake one in an acceptable format
@@ -18,7 +19,7 @@ describe('we-js-logger', () => {
       const name = 'WeTest!';
       const log = new Logger({ name });
 
-      expect(log.fields.name).to.equal(name);
+      expect(log._logger.fields.name).to.equal(name);
     });
 
     it('accepts custom streams', () => {
@@ -37,11 +38,11 @@ describe('we-js-logger', () => {
         ]
       });
 
-      expect(log.streams.filter((config) => {
+      expect(log._logger.streams.filter((config) => {
         return config.stream instanceof TestLogger;
       }), 'Adds the custom stream').to.be.ok;
 
-      expect(log.streams).to.have.length.gte(1, 'Has more than one stream');
+      expect(log._logger.streams).to.have.length.gte(1, 'Has more than one stream');
 
       log.debug({ foo: 'bar' }, msg);
       expect(cb.lastCall.args[0]).to.include({
@@ -54,15 +55,15 @@ describe('we-js-logger', () => {
     });
 
     it('accepts a stdout flag', () => {
-      expect(new Logger({ stdout: false }).streams).to.have.length(0);
+      expect(new Logger({ stdout: false })._logger.streams).to.have.length(0);
 
       // The actual stdout stream differs based on runtime env, just
       // asserting is is there.
-      expect(new Logger({ stdout: true }).streams).to.have.length(1);
+      expect(new Logger({ stdout: true })._logger.streams).to.have.length(1);
     });
 
     it('accepts a logentriesToken', () => {
-      expect(new Logger().streams.find((config) => {
+      expect(new Logger()._logger.streams.find((config) => {
         return config.name === 'logentries';
       })).to.not.be.ok;
 
@@ -72,13 +73,13 @@ describe('we-js-logger', () => {
 
       // The actual logentries stream differs based on runtime env, just
       // asserting one is there
-      expect(log.streams.find((config) => {
+      expect(log._logger.streams.find((config) => {
         return config.name === 'logentries';
       })).to.be.ok;
     });
 
     it('accepts a rollbarToken', () => {
-      expect(new Logger().streams.find((config) => {
+      expect(new Logger()._logger.streams.find((config) => {
         return config.name === 'rollbar';
       })).to.not.be.ok;
 
@@ -88,7 +89,7 @@ describe('we-js-logger', () => {
 
       // The actual rollbar stream differs based on runtime env, just
       // asserting one is there
-      expect(log.streams.find((config) => {
+      expect(log._logger.streams.find((config) => {
         return config.name === 'rollbar';
       })).to.be.ok;
     });
@@ -108,20 +109,20 @@ describe('we-js-logger', () => {
           'scrubMe',
         ],
       });
-      log._emit = sinon.stub();
+      log._logger._emit = sinon.stub();
     });
 
     it('hides secrets for fields', () => {
       log.info({ scrubMe: 'This should be ignored', tlc: 'No Scrubs' });
-      expect(log._emit).to.have.been.calledOnce;
-      expect(log._emit.firstCall.args[0].scrubMe).to.equal('[SECRET]');
-      expect(log._emit.firstCall.args[0].tlc).to.equal('No Scrubs');
+      expect(log._logger._emit).to.have.been.calledOnce;
+      expect(log._logger._emit.firstCall.args[0].scrubMe).to.equal('[SECRET]');
+      expect(log._logger._emit.firstCall.args[0].tlc).to.equal('No Scrubs');
     });
 
     it('hides secrets for msg', () => {
       log.info('Testing Log', { scrubMe: 'This should be ignored', tlc: 'No Scrubs' });
-      expect(log._emit).to.have.been.calledOnce;
-      expect(log._emit.firstCall.args[0].msg).to.equal("Testing Log { scrubMe: '[SECRET]', tlc: 'No Scrubs' }");
+      expect(log._logger._emit).to.have.been.calledOnce;
+      expect(log._logger._emit.firstCall.args[0].msg).to.equal("Testing Log { scrubMe: '[SECRET]', tlc: 'No Scrubs' }");
     });
 
     describe('child log', () => {
@@ -129,20 +130,20 @@ describe('we-js-logger', () => {
 
       beforeEach(() => {
         childLog = log.child({ component: 'child/test' });
-        childLog._emit = sinon.stub();
+        childLog._logger._emit = sinon.stub();
       });
 
       it('hides secrets for fields', () => {
         childLog.info({ scrubMe: 'This should be ignored', tlc: 'No Scrubs' });
-        expect(childLog._emit).to.have.been.calledOnce;
-        expect(childLog._emit.firstCall.args[0].scrubMe).to.equal('[SECRET]');
-        expect(childLog._emit.firstCall.args[0].tlc).to.equal('No Scrubs');
+        expect(childLog._logger._emit).to.have.been.calledOnce;
+        expect(childLog._logger._emit.firstCall.args[0].scrubMe).to.equal('[SECRET]');
+        expect(childLog._logger._emit.firstCall.args[0].tlc).to.equal('No Scrubs');
       });
 
       it('hides secrets for msg', () => {
         childLog.info('Testing Log', { scrubMe: 'This should be ignored', tlc: 'No Scrubs' });
-        expect(childLog._emit).to.have.been.calledOnce;
-        expect(childLog._emit.firstCall.args[0].msg).to.equal("Testing Log { scrubMe: '[SECRET]', tlc: 'No Scrubs' }");
+        expect(childLog._logger._emit).to.have.been.calledOnce;
+        expect(childLog._logger._emit.firstCall.args[0].msg).to.equal("Testing Log { scrubMe: '[SECRET]', tlc: 'No Scrubs' }");
       });
     });
   });
@@ -159,15 +160,15 @@ describe('we-js-logger', () => {
 
     describe('root fields', () => {
       it('has extra root fields "release" and "environment" by default', () => {
-        expect(log.fields).to.have.property('release');
-        expect(log.fields).to.have.property('environment');
+        expect(log._logger.fields).to.have.property('release');
+        expect(log._logger.fields).to.have.property('environment');
       });
 
       it('does not have extra root fields, such as "rollbarToken"', () => {
-        expect(log.fields).not.to.have.property('rollbarToken');
-        expect(log.fields).not.to.have.property('logentriesToken');
-        expect(log.fields).not.to.have.property('scrubFields');
-        expect(log.fields).not.to.have.property('stdout');
+        expect(log._logger.fields).not.to.have.property('rollbarToken');
+        expect(log._logger.fields).not.to.have.property('logentriesToken');
+        expect(log._logger.fields).not.to.have.property('scrubFields');
+        expect(log._logger.fields).not.to.have.property('stdout');
       });
 
       it('can be configured to include any keys', () => {
@@ -176,10 +177,10 @@ describe('we-js-logger', () => {
           badIdea: 'supersecret',
           release: { foo: 'not gonna be included unless specified in rootFields' }
         })
-        expect(customLog.fields).to.have.property('badIdea');
-        expect(customLog.fields).not.to.have.property('release');
+        expect(customLog._logger.fields).to.have.property('badIdea');
+        expect(customLog._logger.fields).not.to.have.property('release');
       });
-    })
+    });
 
     describe('log methods', () => {
       it('has a #fatal method', () => {
@@ -200,7 +201,30 @@ describe('we-js-logger', () => {
       it('has a #trace method', () => {
         expect(log.trace).to.be.a('function');
       });
-    })
+    });
+
+    describe('#child', () => {
+      it('calls child on the logger bunyan instance', () => {
+        sinon.spy(bunyan.prototype, 'child');
+        log.child();
+
+        expect(bunyan.prototype.child).to.have.been.calledOnce;
+      });
+
+      it('instantiates a new logger with the new child', () => {
+        const stubChild = {};
+        sinon.stub(bunyan.prototype, 'child').returns(stubChild);
+        const child = log.child();
+
+        expect(child).not.to.eql(log);
+        expect(child._logger).to.eql(stubChild);
+      });
+
+      it('instantiates a new logger with the same config', () => {
+        const child = log.child();
+        expect(child._config).to.eql(log._config);
+      });
+    });
 
     // FIXME find a better way to do this. Should we use `env-universal`?
     if (typeof document === 'undefined') {

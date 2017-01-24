@@ -1,7 +1,7 @@
-import Logger from '../../../';
-import TestLogger from '../../testLogger';
+import Logger from '../..';
+import TestLogger from '../testLogger';
 
-import createRequestLogger from '../../../src/util/server/requestLogger';
+import createRequestLogger from '../../src/util/server/requestLogger';
 
 // Only run these tests in node
 // FIXME find a better way to do this. Should we use `env-universal`?
@@ -66,6 +66,7 @@ if (typeof document === 'undefined') {
 
       it('logs a start request item', () => {
         middleware(req, res, next);
+
         expect(cb.firstCall.args[0]).to.include({
           msg: 'start request'
         });
@@ -124,9 +125,9 @@ if (typeof document === 'undefined') {
         res.on = sinon.stub();
         middleware(req, res, next);
 
-        expect(req.log.fields.component).to.eql('request');
-        expect(req.log.fields.req).to.eql(req);
-        expect(req.log.fields.req_id).to.eql(testReqId);
+        expect(req.log._logger.fields.component).to.eql('request');
+        expect(req.log._logger.fields.req).to.eql(req);
+        expect(req.log._logger.fields.req_id).to.eql(testReqId);
       });
 
       it('clears `req.log` after the response is finished', () => {
