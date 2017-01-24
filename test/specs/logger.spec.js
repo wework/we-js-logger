@@ -113,10 +113,10 @@ describe('we-js-logger', () => {
     });
 
     it('hides secrets for fields', () => {
-      log.info({ scrubMe: 'This should be ignored', tlc: 'No Scrubs' });
+      log.info({ data: { scrubMe: 'This should be ignored', tlc: 'No Scrubs' } });
       expect(log._logger._emit).to.have.been.calledOnce;
-      expect(log._logger._emit.firstCall.args[0].scrubMe).to.equal('[SECRET]');
-      expect(log._logger._emit.firstCall.args[0].tlc).to.equal('No Scrubs');
+      expect(log._logger._emit.firstCall.args[0].data.scrubMe).to.equal('[SECRET]');
+      expect(log._logger._emit.firstCall.args[0].data.tlc).to.equal('No Scrubs');
     });
 
     it('hides secrets for msg', () => {
@@ -134,10 +134,10 @@ describe('we-js-logger', () => {
       });
 
       it('hides secrets for fields', () => {
-        childLog.info({ scrubMe: 'This should be ignored', tlc: 'No Scrubs' });
+        childLog.info({ data: { scrubMe: 'This should be ignored', tlc: 'No Scrubs' } });
         expect(childLog._logger._emit).to.have.been.calledOnce;
-        expect(childLog._logger._emit.firstCall.args[0].scrubMe).to.equal('[SECRET]');
-        expect(childLog._logger._emit.firstCall.args[0].tlc).to.equal('No Scrubs');
+        expect(childLog._logger._emit.firstCall.args[0].data.scrubMe).to.equal('[SECRET]');
+        expect(childLog._logger._emit.firstCall.args[0].data.tlc).to.equal('No Scrubs');
       });
 
       it('hides secrets for msg', () => {

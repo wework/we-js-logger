@@ -15,6 +15,6 @@ export default function logForLevel(level) {
    * @return {undefined}
    */
   return function logIt(...args) {
-    return this._logger[level].apply(this._logger, scrub(args, this._config));
+    return this._logger[level].apply(this._logger, scrub(args, this._config, this._logger));
   }
 }
