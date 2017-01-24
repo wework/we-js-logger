@@ -84,7 +84,10 @@ function getStreams(config) {
     streams.push({
       name: 'logentries',
       level: config.level,
-      stream: new ClientLogentriesLogger({ token: config.logentriesToken }),
+      stream: new ClientLogentriesLogger({
+        name: config.name,
+        token: config.logentriesToken
+      }),
       type: 'raw'
     });
   }

@@ -7,12 +7,19 @@ import LE from 'le_js';
 * @param {String} options.token
 * @param {String} options.level
 */
-export default function ClientLogentriesLogger({ token }) {
-  LE.init({
-    token,
-    no_format: true,
-    page_info: 'per-page'
-  });
+export default function ClientLogentriesLogger({ name, token }) {
+  try {
+    // If a LE logger does not exist with this name, this will throw
+    LE.to(name);
+  } catch (err) {
+    // Init the LE logger
+    LE.init({
+      name,
+      token,
+      no_format: true,
+      page_info: 'per-page'
+    });
+  }
 }
 
 /**

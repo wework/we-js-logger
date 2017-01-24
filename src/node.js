@@ -80,6 +80,7 @@ function getStreams(config) {
   // Transport server logs
   if (config.logentriesToken) {
     streams.push(new ServerLogentriesLogger({
+      name: config.name,
       token: config.logentriesToken,
       level: config.level
     }));
