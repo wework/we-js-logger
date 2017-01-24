@@ -9,6 +9,8 @@
     -   [write](#write-1)
 -   [ClientRollbarLogger](#clientrollbarlogger)
     -   [write](#write-2)
+-   [bunyanToRollbarLevelMap](#bunyantorollbarlevelmap)
+-   [bunyanLevelToRollbarLevelName](#bunyanleveltorollbarlevelname)
 -   [NodeLogger](#nodelogger)
 -   [BUNYAN_CONFIG_FIELDS](#bunyan_config_fields)
 -   [DEFAULT_ROOT_FIELDS](#default_root_fields)
@@ -20,15 +22,13 @@
 -   [logIt](#logit)
 -   [ServerRollbarLogger](#serverrollbarlogger)
     -   [write](#write-3)
--   [bunyanToRollbarLevelMap](#bunyantorollbarlevelmap)
--   [bunyanLevelToRollbarLevelName](#bunyanleveltorollbarlevelname)
 -   [ServerLogentriesLogger](#serverlogentrieslogger)
 -   [createRequestLogger](#createrequestlogger)
 -   [requestLoggerMiddleware](#requestloggermiddleware)
 
 ## ClientLogger
 
-[src/client.js:18-24](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/client.js#L18-L24 "Source code on GitHub")
+[src/client.js:18-24](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/client.js#L18-L24 "Source code on GitHub")
 
 A logger than can be used in browsers
 
@@ -40,13 +40,13 @@ A logger than can be used in browsers
 
 ## ClientConsoleLogger
 
-[src/util/client/consoleLogger.js:6-6](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/client/consoleLogger.js#L6-L6 "Source code on GitHub")
+[src/util/client/consoleLogger.js:6-6](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/client/consoleLogger.js#L6-L6 "Source code on GitHub")
 
 Pretty logging to `console` for client applications
 
 ### write
 
-[src/util/client/consoleLogger.js:13-45](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/client/consoleLogger.js#L13-L45 "Source code on GitHub")
+[src/util/client/consoleLogger.js:13-45](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/client/consoleLogger.js#L13-L45 "Source code on GitHub")
 
 Transport to `console`
 
@@ -58,7 +58,7 @@ Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Re
 
 ## ClientLogentriesLogger
 
-[src/util/client/logentriesLogger.js:10-23](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/client/logentriesLogger.js#L10-L23 "Source code on GitHub")
+[src/util/client/logentriesLogger.js:10-23](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/client/logentriesLogger.js#L10-L23 "Source code on GitHub")
 
 Custom bunyan stream that transports to Logentries from client applications
 
@@ -72,7 +72,7 @@ Custom bunyan stream that transports to Logentries from client applications
 
 ### write
 
-[src/util/client/logentriesLogger.js:30-37](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/client/logentriesLogger.js#L30-L37 "Source code on GitHub")
+[src/util/client/logentriesLogger.js:30-37](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/client/logentriesLogger.js#L30-L37 "Source code on GitHub")
 
 Transport logs to Logentries
 
@@ -84,7 +84,7 @@ Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Re
 
 ## ClientRollbarLogger
 
-[src/util/client/rollbarLogger.js:19-35](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/client/rollbarLogger.js#L19-L35 "Source code on GitHub")
+[src/util/client/rollbarLogger.js:19-35](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/client/rollbarLogger.js#L19-L35 "Source code on GitHub")
 
 Custom rollbar stream that transports to logentries from a browser
 Wortks with a global Rollbar instance that is already initialized.
@@ -104,7 +104,7 @@ integrating Rollbar in client apps
 
 ### write
 
-[src/util/client/rollbarLogger.js:42-48](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/client/rollbarLogger.js#L42-L48 "Source code on GitHub")
+[src/util/client/rollbarLogger.js:42-48](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/client/rollbarLogger.js#L42-L48 "Source code on GitHub")
 
 Transport logs to Rollbar
 
@@ -114,9 +114,29 @@ Transport logs to Rollbar
 
 Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
 
+## bunyanToRollbarLevelMap
+
+[src/util/common/rollbar.js:9-16](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/common/rollbar.js#L9-L16 "Source code on GitHub")
+
+Map of bunyan log levels to Rollbar levels
+<https://github.com/trentm/node-bunyan#levels>
+<https://rollbar.com/docs/notifier/rollbar.js/api/#rollbardebuginfowarnwarningerrorcritical>
+
+## bunyanLevelToRollbarLevelName
+
+[src/util/common/rollbar.js:23-26](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/common/rollbar.js#L23-L26 "Source code on GitHub")
+
+Convert bunyan log level to rollbar level. Defaults to 'error'.
+
+**Parameters**
+
+-   `level` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?= bunyan.ERROR** bunyan log level
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Rollbar log level
+
 ## NodeLogger
 
-[src/node.js:20-30](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/node.js#L20-L30 "Source code on GitHub")
+[src/node.js:20-30](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/node.js#L20-L30 "Source code on GitHub")
 
 A logger than can be used in node processes
 
@@ -128,14 +148,14 @@ A logger than can be used in node processes
 
 ## BUNYAN_CONFIG_FIELDS
 
-[src/util/common/config.js:9-14](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/common/config.js#L9-L14 "Source code on GitHub")
+[src/util/common/config.js:9-14](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/common/config.js#L9-L14 "Source code on GitHub")
 
 Config keys that should always be passed to
 `bunyan.createLogger`
 
 ## DEFAULT_ROOT_FIELDS
 
-[src/util/common/config.js:22-25](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/common/config.js#L22-L25 "Source code on GitHub")
+[src/util/common/config.js:22-25](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/common/config.js#L22-L25 "Source code on GitHub")
 
 Whitelist of extra config keys that should be
 passed to `bunyan.createLogger` to form
@@ -143,18 +163,18 @@ root logger fields.
 
 ## BUNYAN_LOGGER_LEVELS
 
-[src/util/common/config.js:32-32](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/common/config.js#L32-L32 "Source code on GitHub")
+[src/util/common/config.js:32-32](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/common/config.js#L32-L32 "Source code on GitHub")
 
 Array of bunyan's different log levels.
 <https://github.com/trentm/node-bunyan#levels>
 
 ## DEFAULT_CONFIG
 
-[src/util/common/config.js:35-47](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/common/config.js#L35-L47 "Source code on GitHub")
+[src/util/common/config.js:35-47](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/common/config.js#L35-L47 "Source code on GitHub")
 
 ## assembleConfig
 
-[src/util/common/config.js:60-67](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/common/config.js#L60-L67 "Source code on GitHub")
+[src/util/common/config.js:60-67](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/common/config.js#L60-L67 "Source code on GitHub")
 
 Merges config with DEFAULT_CONFIG, and appends passed in streams
 with pre-configured streams for the runtime.
@@ -171,7 +191,7 @@ Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 
 ## toBunyanConfig
 
-[src/util/common/config.js:78-80](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/common/config.js#L78-L80 "Source code on GitHub")
+[src/util/common/config.js:78-80](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/common/config.js#L78-L80 "Source code on GitHub")
 
 Create a config objct for bunyan from a full `we-js-logger` config object.
 Extra keys passed to `bunyan.createLogger` become root logger fields, pass
@@ -186,7 +206,7 @@ Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 
 ## logForLevel
 
-[src/util/common/logForLevel.js:8-20](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/common/logForLevel.js#L8-L20 "Source code on GitHub")
+[src/util/common/logForLevel.js:8-20](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/common/logForLevel.js#L8-L20 "Source code on GitHub")
 
 Creates a log method for a particular level
 
@@ -198,7 +218,7 @@ Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Ref
 
 ## logIt
 
-[src/util/common/logForLevel.js:17-19](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/common/logForLevel.js#L17-L19 "Source code on GitHub")
+[src/util/common/logForLevel.js:17-19](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/common/logForLevel.js#L17-L19 "Source code on GitHub")
 
 Log at a level.
 Must be bound to a logger instance.
@@ -211,7 +231,7 @@ Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Re
 
 ## ServerRollbarLogger
 
-[src/util/server/rollbarLogger.js:10-17](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/server/rollbarLogger.js#L10-L17 "Source code on GitHub")
+[src/util/server/rollbarLogger.js:10-17](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/server/rollbarLogger.js#L10-L17 "Source code on GitHub")
 
 Custom bunyan stream that transports to Rollbar from a node process.
 See <https://rollbar.com/docs/notifier/node_rollbar/> for integration details
@@ -225,7 +245,7 @@ See <https://rollbar.com/docs/notifier/node_rollbar/> for integration details
 
 ### write
 
-[src/util/server/rollbarLogger.js:27-37](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/server/rollbarLogger.js#L27-L37 "Source code on GitHub")
+[src/util/server/rollbarLogger.js:27-37](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/server/rollbarLogger.js#L27-L37 "Source code on GitHub")
 
 handles `err` and `req` properties, attaches any custom data,
 and calls the appropriate Rollbar method.
@@ -236,29 +256,9 @@ and calls the appropriate Rollbar method.
 
 Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
 
-## bunyanToRollbarLevelMap
-
-[src/util/common/rollbar.js:9-16](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/common/rollbar.js#L9-L16 "Source code on GitHub")
-
-Map of bunyan log levels to Rollbar levels
-<https://github.com/trentm/node-bunyan#levels>
-<https://rollbar.com/docs/notifier/rollbar.js/api/#rollbardebuginfowarnwarningerrorcritical>
-
-## bunyanLevelToRollbarLevelName
-
-[src/util/common/rollbar.js:23-26](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/common/rollbar.js#L23-L26 "Source code on GitHub")
-
-Convert bunyan log level to rollbar level. Defaults to 'error'.
-
-**Parameters**
-
--   `level` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?= bunyan.ERROR** bunyan log level
-
-Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Rollbar log level
-
 ## ServerLogentriesLogger
 
-[src/util/server/logentriesLogger.js:10-20](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/server/logentriesLogger.js#L10-L20 "Source code on GitHub")
+[src/util/server/logentriesLogger.js:10-20](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/server/logentriesLogger.js#L10-L20 "Source code on GitHub")
 
 Custom bunyan stream that transports to logentries from a node process
 
@@ -276,7 +276,7 @@ Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 
 ## createRequestLogger
 
-[src/util/server/requestLogger.js:12-48](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/server/requestLogger.js#L12-L48 "Source code on GitHub")
+[src/util/server/requestLogger.js:12-48](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/server/requestLogger.js#L12-L48 "Source code on GitHub")
 
 Create a request loging express middleware
 
@@ -292,7 +292,7 @@ Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Ref
 
 ## requestLoggerMiddleware
 
-[src/util/server/requestLogger.js:24-47](https://github.com/wework/we-js-logger/blob/de636ab8ddf021a5bcd210a75b7344fbae0db754/src/util/server/requestLogger.js#L24-L47 "Source code on GitHub")
+[src/util/server/requestLogger.js:24-47](https://github.com/wework/we-js-logger/blob/3f66a7a9d442d8998c877169ea9e0472eab8185e/src/util/server/requestLogger.js#L24-L47 "Source code on GitHub")
 
 Request Logger Middleware
 Adds base logging to every request
