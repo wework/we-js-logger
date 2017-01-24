@@ -7,8 +7,9 @@ import Logentries from 'le_node';
  * @param {String} options.level
  * @returns {Object} - bunyan stream config
  */
-export default function ServerLogentriesLogger({ token, level }) {
+export default function ServerLogentriesLogger({ name, token, level }) {
   const loggerDefinition = Logentries.bunyanStream({
+    name,
     token,
     secure: true,
     withStack: true
