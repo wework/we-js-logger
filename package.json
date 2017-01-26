@@ -109,7 +109,7 @@
     "karma-sauce-launcher": "1.1.0",
     "karma-sinon-chai": "1.2.4",
     "karma-sourcemap-loader": "0.3.7",
-    "karma-webpack": "2.0.1",
+    "karma-webpack": "2.0.2",
     "leakage": "0.2.0",
     "loadtest": "2.2.1",
     "mkdirp": "0.5.1",
