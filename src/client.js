@@ -9,6 +9,9 @@ import ClientConsoleLogger from './util/client/consoleLogger';
 import ClientLogentriesLogger from './util/client/logentriesLogger';
 import ClientRollbarLogger, { isGlobalRollbarConfigured } from './util/client/rollbarLogger';
 
+// Safe console access for oldIE
+import console from 'console';
+
 /**
  * A logger than can be used in browsers
  * @param   {Object}  config - we-js-logger config
