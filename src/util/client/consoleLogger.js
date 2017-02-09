@@ -1,5 +1,8 @@
 import bunyan from 'bunyan';
 
+// Safe console access for oldIE
+import console from 'console';
+
 /**
  * Pretty logging to `console` for client applications
  */
