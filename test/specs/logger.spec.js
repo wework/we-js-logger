@@ -1,8 +1,9 @@
+import bunyan from 'bunyan';
+import TestLogger from '../testLogger';
+
 // Require the package. For client tests, webpack should
 // resolve to the browser version automatically.
 import Logger from '../..';
-import TestLogger from '../testLogger';
-import bunyan from 'bunyan';
 
 // Logentries validates the token it is passed,
 // here is a fake one in an acceptable format
@@ -33,9 +34,9 @@ describe('we-js-logger', () => {
         streams: [
           {
             type: 'raw',
-            stream: new TestLogger({ cb })
-          }
-        ]
+            stream: new TestLogger({ cb }),
+          },
+        ],
       });
 
       expect(log._logger.streams.filter((config) => {
@@ -48,7 +49,7 @@ describe('we-js-logger', () => {
       expect(cb.lastCall.args[0]).to.include({
         name,
         msg,
-        foo: 'bar'
+        foo: 'bar',
       }, 'Uses the custom stream');
 
       // TODO test that logs at a higher level dont go to the transport
@@ -68,7 +69,7 @@ describe('we-js-logger', () => {
       })).to.not.be.ok;
 
       const log = new Logger({
-        logentriesToken: fakeToken
+        logentriesToken: fakeToken,
       });
 
       // The actual logentries stream differs based on runtime env, just
@@ -84,7 +85,7 @@ describe('we-js-logger', () => {
       })).to.not.be.ok;
 
       const log = new Logger({
-        rollbarToken: fakeToken
+        rollbarToken: fakeToken,
       });
 
       // The actual rollbar stream differs based on runtime env, just
@@ -154,7 +155,7 @@ describe('we-js-logger', () => {
 
     beforeEach(() => {
       log = new Logger({
-        release: { foo: 'bar' }
+        release: { foo: 'bar' },
       });
     });
 
@@ -175,8 +176,8 @@ describe('we-js-logger', () => {
         const customLog = new Logger({
           rootFields: [ 'badIdea' ],
           badIdea: 'supersecret',
-          release: { foo: 'not gonna be included unless specified in rootFields' }
-        })
+          release: { foo: 'not gonna be included unless specified in rootFields' },
+        });
         expect(customLog._logger.fields).to.have.property('badIdea');
         expect(customLog._logger.fields).not.to.have.property('release');
       });

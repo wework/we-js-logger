@@ -1,3 +1,5 @@
+/* eslint-disable import/prefer-default-export */
+
 import bunyan from 'bunyan';
 
 /**
@@ -12,7 +14,7 @@ const bunyanToRollbarLevelMap = {
   warn: 'warning',
   info: 'info',
   debug: 'debug',
-  trace: 'debug'
+  trace: 'debug',
 };
 
 /**

@@ -6,11 +6,11 @@
 
 const express = require('express');
 const loadtest = require('loadtest');
+const Logger = require('../..');
 
 const PORT = 3030;
 const TEST_LENGTH = 30; // seconds
 
-const Logger = require('../..');
 const logger = new Logger({
   stdout: false,
   scrubFields: ['test'],
@@ -30,7 +30,7 @@ app.get('*', (req, res) => {
   res.status(200).send();
 });
 
-let loadOptions = {
+const loadOptions = {
   url: `http://localhost:${PORT}`,
   // Run stress test for this long.
   maxSeconds: TEST_LENGTH,
@@ -77,10 +77,10 @@ describe('Request Logger -- Stress Test', function () {
     // Retry a few times in case of result variance
     this.retries(4);
 
-    loadtest.loadTest(loadOptions, function(error, results) {
+    loadtest.loadTest(loadOptions, (error, results) => {
       if (error) {
         done(error);
-        return
+        return;
       }
 
       printResults(results);

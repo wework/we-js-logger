@@ -1,6 +1,7 @@
-'use strict';
-
 import bunyan from 'bunyan';
+
+// Safe console access for oldIE
+import console from 'console';
 
 import logForLevel from './util/common/logForLevel';
 import { assembleConfig, toBunyanConfig, BUNYAN_LOGGER_LEVELS } from './util/common/config';
@@ -8,34 +9,6 @@ import { assembleConfig, toBunyanConfig, BUNYAN_LOGGER_LEVELS } from './util/com
 import ClientConsoleLogger from './util/client/consoleLogger';
 import ClientLogentriesLogger from './util/client/logentriesLogger';
 import ClientRollbarLogger, { isGlobalRollbarConfigured } from './util/client/rollbarLogger';
-
-// Safe console access for oldIE
-import console from 'console';
-
-/**
- * A logger than can be used in browsers
- * @param   {Object}  config - we-js-logger config
- * @param   {Object?} logger - an instance of a `bunyan` logger to use internally.
- *                             this is meant to be used by the `child` method.
- */
-export default function ClientLogger(config = {}, logger) {
-  const clientConfig = assembleConfig(config, getStreams);
-  logger = logger || bunyan.createLogger(toBunyanConfig(clientConfig));
-
-  this._config = config;
-  this._logger = logger;
-}
-
-ClientLogger.prototype.child = function () {
-  const childLogger = this._logger.child.apply(this._logger, arguments);
-  return new ClientLogger(this._config, childLogger);
-}
-
-// Dynamically hoist + wrap bunyan log instance methods (logger.info, logger.warn, etc)
-BUNYAN_LOGGER_LEVELS.forEach(level => {
-  ClientLogger.prototype[level] = logForLevel(level);
-});
-
 
 /**
  * Add standard Client logger streams to `config.streams`
@@ -56,7 +29,7 @@ function getStreams(config) {
       name: 'stdout',
       level: config.level,
       stream: new ClientConsoleLogger(),
-      type: 'raw'
+      type: 'raw',
     });
   }
 
@@ -73,7 +46,7 @@ function getStreams(config) {
           environment: config.environment,
           codeVersion: config.codeVersion,
         }),
-        type: 'raw'
+        type: 'raw',
       });
     }
   } else {
@@ -89,11 +62,37 @@ function getStreams(config) {
       level: config.level,
       stream: new ClientLogentriesLogger({
         name: config.name,
-        token: config.logentriesToken
+        token: config.logentriesToken,
       }),
-      type: 'raw'
+      type: 'raw',
     });
   }
 
   return streams;
 }
+
+/**
+ * A logger than can be used in browsers
+ * @param   {Object}  config - we-js-logger config
+ * @param   {Object?} logger - an instance of a `bunyan` logger to use internally.
+ *                             this is meant to be used by the `child` method.
+ */
+export default function ClientLogger(config = {}, logger) {
+  const clientConfig = assembleConfig(config, getStreams);
+  logger = logger || bunyan.createLogger(toBunyanConfig(clientConfig)); // eslint-disable-line no-param-reassign
+
+  this._config = config;
+  this._logger = logger;
+}
+
+/* eslint-disable prefer-spread, prefer-rest-params */
+ClientLogger.prototype.child = function () {
+  const childLogger = this._logger.child.apply(this._logger, arguments);
+  return new ClientLogger(this._config, childLogger);
+};
+/* eslint-enable */
+
+// Dynamically hoist + wrap bunyan log instance methods (logger.info, logger.warn, etc)
+BUNYAN_LOGGER_LEVELS.forEach((level) => {
+  ClientLogger.prototype[level] = logForLevel(level);
+});

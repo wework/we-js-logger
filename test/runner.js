@@ -8,7 +8,7 @@ const sinon = require('sinon');
 // TODO better way to guard this
 // For browser tests, sinon-chai is loaded in karma config
 if (typeof document === 'undefined') {
-  const sinonChai = require('sinon-chai');
+  const sinonChai = require('sinon-chai'); // eslint-disable-line global-require
   chai.use(sinonChai);
 }
 

@@ -27,11 +27,11 @@ if (typeof document === 'undefined') {
 
       beforeEach(() => {
         req = {
-          get: sinon.stub()
+          get: sinon.stub(),
         };
         res = {
           setHeader: sinon.stub(),
-          on: sinon.stub().yields()
+          on: sinon.stub().yields(),
         };
         next = sinon.stub();
 
@@ -40,8 +40,8 @@ if (typeof document === 'undefined') {
         logger = new Logger({
           stdout: false,
           streams: [
-            { type: 'raw', stream: new TestLogger({ cb }) }
-          ]
+            { type: 'raw', stream: new TestLogger({ cb }) },
+          ],
         });
 
         middleware = createRequestLogger(logger);
@@ -54,7 +54,7 @@ if (typeof document === 'undefined') {
         middleware(req, res, next);
 
         expect(cb.firstCall.args[0]).to.include({
-          req_id: testReqId
+          req_id: testReqId,
         });
       });
 
@@ -68,14 +68,14 @@ if (typeof document === 'undefined') {
         middleware(req, res, next);
 
         expect(cb.firstCall.args[0]).to.include({
-          msg: 'start request'
+          msg: 'start request',
         });
       });
 
       it('logs an end request item', () => {
         middleware(req, res, next);
         expect(cb.lastCall.args[0]).to.include({
-          msg: 'end request'
+          msg: 'end request',
         });
       });
 
