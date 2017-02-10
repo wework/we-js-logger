@@ -37,7 +37,7 @@
     "bundle:node": "rollup -c --environment RUNTIME_ENV:node",
     "bundle:browser": "rollup -c --environment RUNTIME_ENV:client",
     "start": "npm test && npm run dist",
-    "dist": "npm run lint && npm run clean && npm run bundle && npm run docs",
+    "dist": "npm run clean && npm run bundle && npm run lint && npm run docs",
     "docs": "documentation build src/client.js src/node.js --github --format md --output API.md",
     "security-scan": "nsp check --output summary --warn-only",
     "pretest": "npm run bundle",
