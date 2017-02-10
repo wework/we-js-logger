@@ -28,8 +28,8 @@ export default function ClientRollbarLogger({ token, environment, codeVersion })
       environment,
       javascript: {
         code_version: codeVersion,
-        source_map_enabled: true
-      }
+        source_map_enabled: true,
+      },
     },
   });
 }

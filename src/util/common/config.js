@@ -62,7 +62,7 @@ export function assembleConfig(config, getStreamsForRuntime) {
 
   // Add our custom streams and return a full `we-js-logger` config object
   return Object.assign(baseConfig, {
-    streams: getStreamsForRuntime(baseConfig)
+    streams: getStreamsForRuntime(baseConfig),
   });
 }
 

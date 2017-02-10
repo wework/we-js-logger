@@ -26,7 +26,7 @@ export default function createRequestLogger(logger, { reqIdHeader = DEFAULT_HEAD
     let log = logger.child({ component: 'request', req_id: id, req });
 
     // attach a logger to each request
-    req.log = log;
+    req.log = log; // eslint-disable-line no-param-reassign
 
     res.setHeader(reqIdHeader, id);
 
@@ -35,11 +35,11 @@ export default function createRequestLogger(logger, { reqIdHeader = DEFAULT_HEAD
     const time = process.hrtime();
     res.on('finish', () => {
       const diff = process.hrtime(time);
-      const duration = diff[0] * 1e3 + diff[1] * 1e-6;
+      const duration = diff[0] * 1e3 + diff[1] * 1e-6; // eslint-disable-line no-mixed-operators
       log.info({ res, duration }, 'end request');
 
       // Release the request logger for GC
-      req.log = null;
+      req.log = null; // eslint-disable-line no-param-reassign
       log = null;
     });
 

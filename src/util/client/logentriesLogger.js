@@ -17,7 +17,7 @@ export default function ClientLogentriesLogger({ name, token }) {
       name,
       token,
       no_format: true,
-      page_info: 'per-page'
+      page_info: 'per-page',
     });
   }
 }

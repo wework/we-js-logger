@@ -22,7 +22,7 @@ function handleContext(data, config = {}, logger) {
 export default function scrub(args, config = {}, logger) {
   if (Array.isArray(config.scrubFields) && config.scrubFields.length) {
     if (isObject(args[0])) {
-      return [handleContext(args[0], config, logger), ...hideSecrets(tail(args), getScrubConfig(config))]
+      return [handleContext(args[0], config, logger), ...hideSecrets(tail(args), getScrubConfig(config))];
     }
 
     return hideSecrets(args, getScrubConfig(config));

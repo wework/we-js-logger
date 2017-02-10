@@ -1,3 +1,5 @@
+/* eslint-disable prefer-spread */
+
 import scrub from './scrub';
 
 /**
@@ -16,5 +18,5 @@ export default function logForLevel(level) {
    */
   return function logIt(...args) {
     return this._logger[level].apply(this._logger, scrub(args, this._config, this._logger));
-  }
+  };
 }

@@ -12,7 +12,7 @@ export default function ServerLogentriesLogger({ name, token, level }) {
     name,
     token,
     secure: true,
-    withStack: true
+    withStack: true,
   });
   loggerDefinition.level = level;
 
