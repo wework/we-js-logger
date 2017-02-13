@@ -113,7 +113,7 @@
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "2.0.2",
     "leakage": "0.2.0",
-    "loadtest": "2.2.1",
+    "loadtest": "2.3.0",
     "mkdirp": "0.5.1",
     "mocha": "3.2.0",
     "np": "2.12.0",
