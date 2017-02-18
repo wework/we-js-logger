@@ -121,7 +121,7 @@
     "nsp": "2.6.2",
     "nyc": "10.1.2",
     "phantomjs-prebuilt": "2.1.14",
-    "rimraf": "2.5.4",
+    "rimraf": "2.6.0",
     "rollup": "0.41.4",
     "rollup-plugin-babel": "2.7.1",
     "rollup-plugin-cleanup": "1.0.0",
