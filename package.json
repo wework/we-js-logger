@@ -77,7 +77,7 @@
     "le_js": "git://github.com/nason/le_js.git#7a75be7c1dd2438e3f1183a68bd2162b80bc94d8",
     "le_node": "^1.7.0",
     "lodash": "^4.17.4",
-    "rollbar": "^0.6.3",
+    "rollbar": "^2.0.0-alpha.4",
     "uuid": "3.0.1"
   },
   "devDependencies": {
