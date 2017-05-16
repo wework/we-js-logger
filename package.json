@@ -112,7 +112,7 @@
     "karma-sinon-chai": "1.2.4",
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "2.0.2",
-    "leakage": "0.2.0",
+    "leakage": "0.3.0",
     "loadtest": "2.3.0",
     "mkdirp": "0.5.1",
     "mocha": "3.2.0",
