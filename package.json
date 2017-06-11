@@ -130,7 +130,7 @@
     "rollup-watch": "3.2.2",
     "semver": "5.3.0",
     "sinon": "1.17.7",
-    "sinon-chai": "2.8.0",
+    "sinon-chai": "2.11.0",
     "webpack": "1.14.0"
   }
 }
