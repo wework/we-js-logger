@@ -124,7 +124,7 @@
     "rimraf": "2.5.4",
     "rollup": "0.41.4",
     "rollup-plugin-babel": "2.7.1",
-    "rollup-plugin-cleanup": "1.0.0",
+    "rollup-plugin-cleanup": "1.0.1",
     "rollup-plugin-conditional": "0.1.4",
     "rollup-plugin-filesize": "1.0.1",
     "rollup-watch": "3.2.2",
