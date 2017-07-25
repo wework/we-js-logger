@@ -131,6 +131,6 @@
     "semver": "5.3.0",
     "sinon": "1.17.7",
     "sinon-chai": "2.8.0",
-    "webpack": "1.14.0"
+    "webpack": "3.4.0"
   }
 }
