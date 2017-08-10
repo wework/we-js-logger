@@ -42,8 +42,7 @@ const loadOptions = {
 
 function printResults(results) {
   // eslint-disable-next-line no-console
-  console.log(
-`
+  console.log(`
 Completed requests: ${results.totalRequests}
 Requests per second: ${results.rps}
 Total time: ${results.totalTimeSeconds}
@@ -55,8 +54,7 @@ Percentage of requests served within a certain time:
   95%   ${results.percentiles['95']}ms
   99%   ${results.percentiles['99']}ms
   100%  ${results.maxLatencyMs}ms (longest request)
-`
-  );
+`);
 }
 
 
