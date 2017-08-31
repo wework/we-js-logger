@@ -126,7 +126,7 @@
     "rollup-plugin-cleanup": "1.0.0",
     "rollup-plugin-conditional": "0.1.4",
     "rollup-plugin-filesize": "1.0.1",
-    "rollup-watch": "3.2.2",
+    "rollup-watch": "4.0.0",
     "semver": "5.3.0",
     "sinon": "1.17.7",
     "sinon-chai": "2.8.0",
