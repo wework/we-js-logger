@@ -14,6 +14,8 @@ export default function ServerRollbarLogger({ token, codeVersion, environment })
   // https://rollbar.com/docs/notifier/rollbar.js/#quick-start-server
   const rollbar = new Rollbar({
     accessToken: token,
+    captureUncaught: true,
+    captureUnhandledRejections: true,
     code_version: codeVersion,
     environment,
   });
