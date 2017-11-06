@@ -70,14 +70,14 @@
     "bunyan"
   ],
   "dependencies": {
-    "bunyan": "^1.8.5",
+    "bunyan": "^1.8.10",
     "bunyan-format": "^0.2.1",
     "console": "0.5.2",
     "hide-secrets": "1.1.0",
     "le_js": "git://github.com/nason/le_js.git#7a75be7c1dd2438e3f1183a68bd2162b80bc94d8",
     "le_node": "^1.7.0",
     "lodash": "^4.17.4",
-    "rollbar": "2.2.9",
+    "rollbar": "^2.3.1",
     "uuid": "3.1.0"
   },
   "devDependencies": {
@@ -117,7 +117,7 @@
     "mocha": "3.2.0",
     "np": "2.16.1",
     "npm-run-all": "4.1.1",
-    "nsp": "2.8.1",
+    "nsp": "3.1.0",
     "nyc": "11.3.0",
     "phantomjs-prebuilt": "2.1.16",
     "rimraf": "2.6.2",
