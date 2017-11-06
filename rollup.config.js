@@ -32,6 +32,27 @@ export default {
   ],
   moduleId: pkgName,
   name: pkgName,
+  external: [
+    'bunyan',
+    'bunyan-format',
+    'hide-secrets',
+    'lodash/isError',
+    'lodash/isFunction',
+    'lodash/isObject',
+    'lodash/mapValues',
+    'lodash/omit',
+    'lodash/pick',
+    'lodash/tail',
+    'rollbar',
+
+    // Client-only
+    'console',
+    'le_js',
+    'lodash/get',
+
+    // Server
+    'le_node',
+  ],
   plugins: [
 
     conditional(
