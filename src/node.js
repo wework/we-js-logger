@@ -74,7 +74,11 @@ export default function NodeLogger(config = {}, logger) {
 
   // Server-specific extras
   this.requestLogger = createRequestLogger(this, serverConfig);
-  this.rollbarErrorMiddleware = Rollbar.errorHandler(serverConfig.rollbarToken);
+
+  const rollbar = new Rollbar({
+    accessToken: config.rollbarToken,
+  });
+  this.rollbarErrorMiddleware = rollbar.errorHandler();
 }
 
 /* eslint-disable prefer-spread, prefer-rest-params */

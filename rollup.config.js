@@ -22,34 +22,58 @@ if (!supportedRuntimes.includes(runtimeEnv)) {
 }
 
 export default {
-  entry: `src/${runtimeEnv}.js`,
-  targets: [
+  input: `src/${runtimeEnv}.js`,
+  output: [
     {
-      dest: `dist/${runtimeEnv}.js`,
-      sourceMap: `dist/${runtimeEnv}.map.js`,
+      file: `dist/${runtimeEnv}.js`,
+      sourcemap: `dist/${runtimeEnv}.map.js`,
       format: 'cjs'
     }
   ],
   moduleId: pkgName,
-  moduleName: pkgName,
-  plugins: [
-    conditional({
-      condition: runtimeEnv === 'client',
-      plugin: babel({
-        exclude: './node_modules/**',
-        moduleIds: true,
+  name: pkgName,
+  external: [
+    'bunyan',
+    'bunyan-format',
+    'hide-secrets',
+    'lodash/isError',
+    'lodash/isFunction',
+    'lodash/isObject',
+    'lodash/mapValues',
+    'lodash/omit',
+    'lodash/pick',
+    'lodash/tail',
+    'rollbar',
 
-        // Custom babelrc for build
-        babelrc: false,
-        presets: [
-          [ 'es2015', { 'modules': false } ],
-          'stage-0'
-        ],
-        plugins: [
-          'external-helpers'
-        ]
-      })
-    }),
+    // Client-only
+    'console',
+    'le_js',
+    'lodash/get',
+
+    // Server
+    'le_node',
+  ],
+  plugins: [
+
+    conditional(
+      runtimeEnv === 'client',
+      [
+        babel({
+          exclude: './node_modules/**',
+          moduleIds: true,
+
+          // Custom babelrc for build
+          babelrc: false,
+          presets: [
+            [ 'es2015', { 'modules': false } ],
+            'stage-0'
+          ],
+          plugins: [
+            'external-helpers'
+          ]
+        })
+      ]
+    ),
 
     cleanup({
       comments: ['some', 'jsdoc']

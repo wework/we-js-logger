@@ -76,14 +76,13 @@ Providing the `Logger` constructor a `logentriesToken` option enables this trans
 # Rollbar Integration
 
 ## Node
-For node usage, this library will initialize Rollbar.
-
-See https://rollbar.com/docs/notifier/node_rollbar/ for documentation on setting up Rollbar for node processes.
+This library will initialize Rollbar
+See https://rollbar.com/docs/notifier/rollbar.js/#quick-start-server for documentation on setting up Rollbar for node processes.
 
 ## Browser
 For browser usage, this library expects Rollbar to be loaded via their quick-start script tag. This also allows Rollbar to capture any errors before the logger's initialization code, if that's important to you.
 
-See https://rollbar.com/docs/notifier/rollbar.js/#quick-start for documentation on setting up Rollbar for browser applications
+See https://rollbar.com/docs/notifier/rollbar.js/#quick-start-browser for documentation on setting up Rollbar for browser applications
 
 # Development
 

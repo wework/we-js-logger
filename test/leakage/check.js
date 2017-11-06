@@ -2,8 +2,8 @@ import { iterate } from 'leakage';
 import bunyan from 'bunyan';
 import Logger from '../..';
 
-const TIMEOUT = 20 * 1000;
-const ITERATIONS = 600;
+const TIMEOUT = 90 * 1000;
+const ITERATIONS = 60;
 
 describe('Heap Tests', () => {
   let log;
@@ -15,17 +15,17 @@ describe('Heap Tests', () => {
 
     it(`does not leak when logging ${ITERATIONS} times`, function () {
       this.timeout(TIMEOUT);
-      iterate(ITERATIONS, () => {
+      iterate(() => {
         log.info({}, 'log time', {});
-      });
+      }, { iterations: ITERATIONS });
     });
 
     it(`does not leak when building and logging child ${ITERATIONS} times`, function () {
       this.timeout(TIMEOUT);
-      iterate(ITERATIONS, () => {
+      iterate(() => {
         const child = log.child();
         child.info({}, 'child time', {});
-      });
+      }, { iterations: ITERATIONS });
     });
   });
 
@@ -36,17 +36,17 @@ describe('Heap Tests', () => {
 
     it(`does not leak when logging ${ITERATIONS} times`, function () {
       this.timeout(TIMEOUT);
-      iterate(ITERATIONS, () => {
+      iterate(() => {
         log.info({}, 'log time', {});
-      });
+      }, { iterations: ITERATIONS });
     });
 
     it(`does not leak when building and logging child ${ITERATIONS} times`, function () {
       this.timeout(TIMEOUT);
-      iterate(ITERATIONS, () => {
+      iterate(() => {
         const child = log.child();
         child.info({}, 'child time', {});
-      });
+      }, { iterations: ITERATIONS });
     });
   });
 
@@ -58,17 +58,17 @@ describe('Heap Tests', () => {
 
     it(`does not leak when logging ${ITERATIONS} times`, function () {
       this.timeout(TIMEOUT);
-      iterate(ITERATIONS, () => {
+      return iterate(() => {
         log.info({}, 'log time', {});
-      });
+      }, { iterations: ITERATIONS });
     });
 
     it(`does not leak when building and logging child ${ITERATIONS} times`, function () {
       this.timeout(TIMEOUT);
-      iterate(ITERATIONS, () => {
+      return iterate(() => {
         const child = log.child();
         child.info({}, 'child time', {});
-      });
+      }, { iterations: ITERATIONS });
     });
   });
 });
