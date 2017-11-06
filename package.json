@@ -20,9 +20,9 @@
   "browser": "dist/client.js",
   "scripts": {
     "benchmark": "node test/benchmark",
-    "test": "npm run test:browser && npm run test:node && npm run test:leakage",
+    "test": "npm run test:browser && npm run test:node && npm run test:stress",
     "tdd": "npm-run-all --parallel test:*:tdd",
-    "test:ci": "npm run test:browser && npm run test:node:ci",
+    "test:ci": "npm run test:browser && npm run test:node:ci && npm run test:stress && npm run test:leakage",
     "test:browser": "NODE_ENV=test karma start test/karma.conf.js",
     "test:browser:tdd": "npm run test:browser -- --auto-watch --no-single-run",
     "test:node": "NODE_ENV=test nyc mocha test/runner test/specs/*.spec.js test/specs/**/*.spec.js",
