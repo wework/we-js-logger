@@ -1,6 +1,7 @@
 language: node_js
 node_js:
-   - "6.*"
+  - node # Latest
+  - "8.*"
 
 # https://github.com/andywer/leakage#travis-ci
 addons:
