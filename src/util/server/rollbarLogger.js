@@ -12,15 +12,13 @@ import { bunyanLevelToRollbarLevelName } from '../common/rollbar';
  */
 export default function ServerRollbarLogger({ token, codeVersion, environment }) {
   // https://rollbar.com/docs/notifier/rollbar.js/#quick-start-server
-  const rollbar = new Rollbar({
+  this._rollbar = new Rollbar({
     accessToken: token,
     captureUncaught: true,
     captureUnhandledRejections: true,
     code_version: codeVersion,
     environment,
   });
-
-  return rollbar;
 }
 
 /**
@@ -37,11 +35,11 @@ ServerRollbarLogger.prototype.write = function (data = {}) {
   const payload = Object.assign({ level: rollbarLevelName }, scopeData);
 
   // https://rollbar.com/docs/notifier/rollbar.js/#rollbarlog-1
-  const logFn = Rollbar[rollbarLevelName];
+  const logFn = this._rollbar[rollbarLevelName];
 
   if (isFunction(logFn)) {
     logFn(data.msg, data.err, data.req, payload);
   } else {
-    Rollbar.error(data.msg, data.err, data.req, payload);
+    this._rollbar.error(data.msg, data.err, data.req, payload);
   }
 };
