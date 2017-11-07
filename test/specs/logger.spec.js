@@ -1,4 +1,4 @@
-import bunyan from 'bunyan';
+import bunyan, { stdSerializers } from 'bunyan';
 import TestLogger from '../testLogger';
 
 // Require the package. For client tests, webpack should
@@ -13,6 +13,10 @@ describe('we-js-logger', () => {
   it('exports a "class"', () => {
     expect(Logger).to.be.a('function');
     expect(new Logger()).to.be.ok;
+  });
+
+  it('exposes "bunyanStdSerializers"', () => {
+    expect(Logger.bunyanStdSerializers).to.eql(stdSerializers);
   });
 
   describe('options', () => {

@@ -1,4 +1,4 @@
-import bunyan from 'bunyan';
+import bunyan, { stdSerializers } from 'bunyan';
 
 // Safe console access for oldIE
 import console from 'console';
@@ -96,3 +96,6 @@ ClientLogger.prototype.child = function () {
 BUNYAN_LOGGER_LEVELS.forEach((level) => {
   ClientLogger.prototype[level] = logForLevel(level);
 });
+
+// Expose bunyan stdSerializers
+ClientLogger.bunyanStdSerializers = stdSerializers;

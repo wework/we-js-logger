@@ -1,4 +1,4 @@
-import bunyan from 'bunyan';
+import bunyan, { stdSerializers } from 'bunyan';
 import Rollbar from 'rollbar';
 import bunyanFormat from 'bunyan-format';
 
@@ -93,4 +93,5 @@ BUNYAN_LOGGER_LEVELS.forEach((level) => {
   NodeLogger.prototype[level] = logForLevel(level);
 });
 
-
+// Expose bunyan stdSerializers
+NodeLogger.bunyanStdSerializers = stdSerializers;
