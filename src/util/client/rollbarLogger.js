@@ -48,7 +48,7 @@ ClientRollbarLogger.prototype.write = function (data = {}) {
   // https://rollbar.com/docs/notifier/rollbar.js/#rollbarlog
   const logFn = global.Rollbar[rollbarLevelName];
   if (isFunction(logFn)) {
-    logFn(data.msg, data.err, scopeData);
+    logFn.call(global.Rollbar, data.msg, data.err, scopeData);
   } else {
     global.Rollbar.error(data.msg, data.err, scopeData);
   }

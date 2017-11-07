@@ -37,7 +37,7 @@ ServerRollbarLogger.prototype.write = function (data = {}) {
   const logFn = this._rollbar[rollbarLevelName];
 
   if (isFunction(logFn)) {
-    logFn(data.msg, data.err, data.req, payload);
+    logFn.call(this._rollbar, data.msg, data.err, data.req, payload);
   } else {
     this._rollbar.error(data.msg, data.err, data.req, payload);
   }
