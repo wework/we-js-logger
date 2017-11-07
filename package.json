@@ -43,13 +43,9 @@
     "pretest": "npm run bundle",
     "preversion": "npm run dist; git add API.md",
     "version": "auto-changelog --template compact --package; git add CHANGELOG.md",
-    "release": "np"
-  },
-  "config": {
-    "ghooks": {
-      "pre-commit": "npm run lint",
-      "pre-push": "npm run security-scan"
-    }
+    "release": "np",
+    "precommit": "npm run lint",
+    "prepush": "npm run security-scan"
   },
   "repository": {
     "type": "git",
@@ -70,7 +66,7 @@
     "bunyan"
   ],
   "dependencies": {
-    "bunyan": "^1.8.10",
+    "bunyan": "^1.8.12",
     "bunyan-format": "^0.2.1",
     "console": "0.5.2",
     "hide-secrets": "1.1.0",
@@ -99,7 +95,7 @@
     "eslint-config-wework": "3.0.0",
     "eslint-friendly-formatter": "2.0.7",
     "express": "4.16.2",
-    "ghooks": "2.0.0",
+    "husky": "0.14.3",
     "imports-loader": "0.7.1",
     "json-loader": "0.5.7",
     "karma": "1.7.1",
