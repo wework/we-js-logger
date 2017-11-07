@@ -30,7 +30,7 @@ export default function ServerRollbarLogger({ token, codeVersion, environment })
  */
 ServerRollbarLogger.prototype.write = function (data = {}) {
   const rollbarLevelName = bunyanLevelToRollbarLevelName(data.level);
-  const scopeData = omit(data, ['req', 'level']);
+  const scopeData = omit(data, ['req', 'err', 'level']);
   const payload = Object.assign({ level: rollbarLevelName }, scopeData);
 
   // https://rollbar.com/docs/notifier/rollbar.js/#rollbarlog-1

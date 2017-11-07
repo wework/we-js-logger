@@ -43,13 +43,14 @@ export default function ClientRollbarLogger({ token, environment, codeVersion })
  */
 ClientRollbarLogger.prototype.write = function (data = {}) {
   const rollbarLevelName = bunyanLevelToRollbarLevelName(data.level);
-  const scopeData = omit(data, ['req', 'level']);
+  const scopeData = omit(data, ['err', 'level']);
+  const payload = Object.assign({ level: rollbarLevelName }, scopeData);
 
   // https://rollbar.com/docs/notifier/rollbar.js/#rollbarlog
   const logFn = global.Rollbar[rollbarLevelName];
   if (isFunction(logFn)) {
-    logFn.call(global.Rollbar, data.msg, data.err, scopeData);
+    logFn.call(global.Rollbar, data.msg, data.err, payload);
   } else {
-    global.Rollbar.error(data.msg, data.err, scopeData);
+    global.Rollbar.error(data.msg, data.err, payload);
   }
 };
