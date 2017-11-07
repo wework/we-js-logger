@@ -1,6 +1,5 @@
 import Rollbar from 'rollbar';
 import omit from 'lodash/omit';
-import isError from 'lodash/isError';
 import isFunction from 'lodash/isFunction';
 import { bunyanLevelToRollbarLevelName } from '../common/rollbar';
 
@@ -37,20 +36,12 @@ ServerRollbarLogger.prototype.write = function (data = {}) {
   const scopeData = omit(data, ['req', 'level']);
   const payload = Object.assign({ level: rollbarLevelName }, scopeData);
 
+  // https://rollbar.com/docs/notifier/rollbar.js/#rollbarlog-1
   const logFn = Rollbar[rollbarLevelName];
 
-  if (data.err && isError(data.err)) {
-    if (isFunction(logFn)) {
-      logFn(data.err, data.req, payload);
-    } else {
-      Rollbar.error(data.err, data.req, payload);
-    }
+  if (isFunction(logFn)) {
+    logFn(data.msg, data.err, data.req, payload);
   } else {
-    // eslint-disable-next-line no-lonely-if
-    if (isFunction(logFn)) {
-      logFn(data.msg, data.req, payload);
-    } else {
-      Rollbar.log(data.msg, data.req, payload);
-    }
+    Rollbar.error(data.msg, data.err, data.req, payload);
   }
 };

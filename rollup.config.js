@@ -36,7 +36,6 @@ export default {
     'bunyan',
     'bunyan-format',
     'hide-secrets',
-    'lodash/isError',
     'lodash/isFunction',
     'lodash/isObject',
     'lodash/mapValues',

@@ -1,5 +1,7 @@
 import omit from 'lodash/omit';
 import get from 'lodash/get';
+import isFunction from 'lodash/isFunction';
+
 import { bunyanLevelToRollbarLevelName } from '../common/rollbar';
 
 // Rollbar script exposes this global immediately, whether or not its already initialized
@@ -43,6 +45,11 @@ ClientRollbarLogger.prototype.write = function (data = {}) {
   const rollbarLevelName = bunyanLevelToRollbarLevelName(data.level);
   const scopeData = omit(data, ['req', 'level']);
 
-  // https://rollbar.com/docs/notifier/rollbar.js/#usage
-  global.Rollbar.scope(scopeData)[rollbarLevelName](data.msg, data.err);
+  // https://rollbar.com/docs/notifier/rollbar.js/#rollbarlog
+  const logFn = global.Rollbar[rollbarLevelName];
+  if (isFunction(logFn)) {
+    logFn(data.msg, data.err, scopeData);
+  } else {
+    global.Rollbar.error(data.msg, data.err, scopeData);
+  }
 };
