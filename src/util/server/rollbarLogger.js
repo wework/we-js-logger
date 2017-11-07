@@ -8,7 +8,6 @@ import { bunyanLevelToRollbarLevelName } from '../common/rollbar';
  * See https://rollbar.com/docs/notifier/node_rollbar/ for integration details
  *
  * @param  {Object} token, codeVersion, and environment
- * @returns {Object} new Rollbar instance
  */
 export default function ServerRollbarLogger({ token, codeVersion, environment }) {
   // https://rollbar.com/docs/notifier/rollbar.js/#quick-start-server
