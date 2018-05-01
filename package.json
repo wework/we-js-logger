@@ -124,7 +124,7 @@
     "rollup-plugin-filesize": "1.4.2",
     "rollup-watch": "4.3.1",
     "semver": "5.4.1",
-    "sinon": "1.17.7",
+    "sinon": "5.0.2",
     "sinon-chai": "2.8.0",
     "webpack": "1.14.0"
   }
