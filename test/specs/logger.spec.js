@@ -166,6 +166,7 @@ describe('we-js-logger', () => {
     beforeEach(() => {
       log = new Logger({
         release: { foo: 'bar' },
+        javascript: { browser: 'Chrome' },
       });
     });
 
@@ -190,6 +191,10 @@ describe('we-js-logger', () => {
         });
         expect(customLog._logger.fields).to.have.property('badIdea');
         expect(customLog._logger.fields).not.to.have.property('release');
+      });
+
+      it('should allow the javascript field', () => {
+        expect(log._logger.fields).to.have.property('javascript');
       });
     });
 
