@@ -22,6 +22,7 @@ const BUNYAN_CONFIG_FIELDS = [
 const DEFAULT_ROOT_FIELDS = [
   'environment',
   'release',
+  'javascript',
 ];
 
 /**
