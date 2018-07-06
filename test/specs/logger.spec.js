@@ -19,6 +19,12 @@ describe('we-js-logger', () => {
     expect(Logger.bunyanStdSerializers).to.eql(stdSerializers);
   });
 
+  if (typeof document === 'undefined') {
+    it('exposes the rollbar instance', () => {
+      expect(new Logger()).to.have.property('rollbar');
+    });
+  }
+
   describe('options', () => {
     it('accepts a name', () => {
       const name = 'WeTest!';
