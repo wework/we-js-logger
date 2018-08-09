@@ -3505,6 +3505,13 @@ https-proxy-agent@^2.1.0:
     agent-base "^4.1.0"
     debug "^2.4.1"
 
+https-proxy-agent@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-2.2.1.tgz#51552970fa04d723e04c56d04178c3f92592bbc0"
+  dependencies:
+    agent-base "^4.1.0"
+    debug "^3.1.0"
+
 husky@0.14.3:
   version "0.14.3"
   resolved "https://registry.yarnpkg.com/husky/-/husky-0.14.3.tgz#c69ed74e2d2779769a17ba8399b54ce0b63c12c3"
@@ -4396,15 +4403,16 @@ loader-utils@^1.0.2:
     emojis-list "^2.0.0"
     json5 "^0.5.0"
 
-loadtest@2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/loadtest/-/loadtest-2.3.0.tgz#bd0bb31358c045ac4ba8c2187557d3cd9f7f9d76"
+loadtest@3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/loadtest/-/loadtest-3.0.4.tgz#dbd345723f51a9537e0e55896dfe1f1f378c6639"
   dependencies:
     agentkeepalive "^2.0.3"
+    https-proxy-agent "^2.2.1"
     log "1.4.*"
     prototypes ">= 0.4.3"
     stdio "^0.2.3"
-    testing "^0.2.3"
+    testing "^1.1.1"
     websocket "^1.0.22"
 
 locate-path@^2.0.0:
@@ -6820,9 +6828,9 @@ test-exclude@^4.1.1:
     read-pkg-up "^1.0.1"
     require-main-filename "^1.0.1"
 
-testing@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/testing/-/testing-0.2.3.tgz#33b768f35590475c506796d8b1f7e2a8921a2aec"
+testing@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/testing/-/testing-1.1.1.tgz#9a05730555f52d6d9c914083bba55ac48ced9203"
   dependencies:
     log "*"
 
