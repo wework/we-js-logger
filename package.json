@@ -89,7 +89,7 @@
     "babel-register": "6.26.0",
     "benchmark": "2.1.4",
     "chai": "3.5.0",
-    "coveralls": "3.0.0",
+    "coveralls": "3.0.3",
     "documentation": "5.3.3",
     "eslint": "4.4.1",
     "eslint-config-wework": "3.0.0",
